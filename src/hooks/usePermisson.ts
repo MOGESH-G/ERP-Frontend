@@ -5,6 +5,7 @@ export function usePermission() {
   const permissions = useSelector((state: RootState) => state.auth.user?.permissions);
 
   const can = (resource: string, action: string) => {
+    console.log(resource, action, permissions);
     return permissions?.[resource]?.[action] === true;
   };
 

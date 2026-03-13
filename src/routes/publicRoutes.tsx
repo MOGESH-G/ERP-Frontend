@@ -51,6 +51,8 @@ const PUBLIC_ROUTES: PublicRouteConfig[] = [
 
 // ─── Single guarded public route ──────────────────────────────────────────────
 
+const DISABLE_AUTH = true;
+
 interface GuardedPublicRouteProps {
   element: LazyExoticComponent<() => ReactNode>;
   redirectIfAuth: boolean;
@@ -64,7 +66,7 @@ function GuardedPublicRoute({
   isAuthenticated,
   authRedirectTo,
 }: GuardedPublicRouteProps): ReactNode {
-  if (redirectIfAuth && isAuthenticated) {
+  if (!DISABLE_AUTH && redirectIfAuth && isAuthenticated) {
     return <Navigate to={authRedirectTo} replace />;
   }
   return <Page />;

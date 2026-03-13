@@ -43,7 +43,7 @@ export default function LoginPage() {
       {
         onSuccess: () => {
           message.success("Login successful");
-          navigate("/dashboard");
+          navigate("/app/dashboard");
         },
         onError: () => {
           console.error("Login error:", error);

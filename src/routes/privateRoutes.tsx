@@ -4,8 +4,6 @@ import Loader from "../components/Loader";
 import { usePermission } from "../hooks/usePermisson";
 import { APP_ROUTES } from "./appRoutes";
 
-export type UserRole = "admin" | "manager" | "user" | "viewer";
-
 export interface PrivateRouteConfig {
   path: string;
   element: LazyExoticComponent<() => ReactNode>;
@@ -17,7 +15,7 @@ export interface AuthUser {
   id: string;
   name: string;
   email: string;
-  role: string;
+  role: string[];
   permissions: Record<string, Record<string, boolean>>;
   avatarUrl?: string;
 }
@@ -62,7 +60,7 @@ function PermissionGuard({
   element: Page,
 }: PermissionGuardProps): ReactNode {
   const { can } = usePermission();
-
+  console.log("Checking permission for resource:", resource, "action:", action);
   if (!can(resource, action)) {
     return <Navigate to={forbiddenPath} replace />;
   }
