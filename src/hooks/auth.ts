@@ -10,7 +10,7 @@ const authKeys = {
 };
 
 interface LoginVariables {
-  email: string;
+  phone: string;
   password: string;
 }
 
@@ -20,7 +20,7 @@ export const useLogin = () => {
 
   return useMutation<LoginResponse, Error, LoginVariables>({
     mutationKey: authKeys.user(),
-    mutationFn: ({ email, password }) => login(email, password),
+    mutationFn: ({ phone, password }) => login(phone, password),
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
       dispatch(loginSuccess({ user: data.user, token: data.token }));

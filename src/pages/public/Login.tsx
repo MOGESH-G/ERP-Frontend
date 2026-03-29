@@ -8,7 +8,7 @@ import CustomButton from "../../components/CustomButton";
 import CustomInput from "../../components/CustomInput";
 import { useNavigate } from "react-router-dom";
 import { message } from "../../lib/message";
-import { validateEmail, validatePassword } from "../../utils/validation";
+import { validatePhone, validatePassword } from "../../utils/validation";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const MotionBox = motion(Box);
@@ -18,15 +18,15 @@ export default function LoginPage() {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const { mutate: login, isPending, error } = useLogin();
 
   const handleLogin = () => {
-    const validEmail = validateEmail(email);
-    if (validEmail !== "") {
-      message.error(validEmail);
+    const validPhone = validatePhone(phone);
+    if (validPhone !== "") {
+      message.error(validPhone);
       return;
     }
     const validPassword = validatePassword(password);
@@ -37,13 +37,13 @@ export default function LoginPage() {
 
     login(
       {
-        email: email,
+        phone: phone,
         password: password,
       },
       {
         onSuccess: () => {
           message.success("Login successful");
-          navigate("/app/dashboard");
+          navigate("/app/home");
         },
         onError: () => {
           console.error("Login error:", error);
@@ -166,10 +166,10 @@ export default function LoginPage() {
             </Box>
 
             <CustomInput
-              label="Email Address"
+              label="Mobile Number"
               fullWidth
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
             />
 
             <CustomInput

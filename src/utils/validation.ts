@@ -1,3 +1,10 @@
+export const validatePhone = (phone: string): string => {
+  if (!phone.trim()) return "Phone number is required";
+  const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+  if (!phoneRegex.test(phone)) return "Invalid phone number";
+  return "";
+};
+
 export const validateEmail = (email: string): string => {
   if (!email.trim()) return "Email is required";
 
