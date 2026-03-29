@@ -4,6 +4,7 @@ import {
   lazy,
   Suspense,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
@@ -94,10 +95,17 @@ export default function PrivateRoutes({
   const currentUser = useSelector((state: RootState) => state.auth.user);
   const currentToken = useSelector((state: RootState) => state.auth.token);
   const [isVerifying, setIsVerifying] = useState(true);
+  const verificationStarted = useRef(false);
 
   const isAuthenticated = isAuthProp !== undefined ? isAuthProp : isAuthFromHook;
 
   useEffect(() => {
+    if (verificationStarted.current) {
+      return;
+    }
+
+    verificationStarted.current = true;
+
     const verify = async () => {
       if (!currentToken) {
         setIsVerifying(false);

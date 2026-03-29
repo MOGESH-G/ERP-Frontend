@@ -3,7 +3,6 @@ import { getApiBaseUrl } from "../lib/api-base-url";
 
 const baseURL = getApiBaseUrl();
 
-console.log("API Base URL:", baseURL);
 const axiosInstance = axios.create({
   baseURL: baseURL,
   withCredentials: true,
