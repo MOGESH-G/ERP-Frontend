@@ -53,6 +53,11 @@ export default function LoginPage() {
     );
   };
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, ""); // remove non-digits
+    setPhone(value);
+  };
+
   return (
     <Box
       sx={{
@@ -104,10 +109,13 @@ export default function LoginPage() {
             Enterprise Resource Planning
           </Typography>
 
-          <Typography variant="h1" sx={{ color: "text.primary" }}>
+          <Typography variant="h2" sx={{ color: "text.primary" }}>
             Every rupee.
             <br />
-            <Box component="span" sx={{ fontStyle: "italic", color: "primary.main" }}>
+            <Box
+              component="span"
+              sx={{ fontStyle: "italic", color: "primary.main" }}
+            >
               Accounted for.
             </Box>
           </Typography>
@@ -120,8 +128,8 @@ export default function LoginPage() {
               color: "text.secondary",
             }}
           >
-            Unified POS, inventory, GST compliance and accounting built specifically for Indian
-            retail businesses.
+            Unified POS, inventory, GST compliance and accounting built
+            specifically for Indian retail businesses.
           </Typography>
         </MotionBox>
       </Box>
@@ -153,12 +161,16 @@ export default function LoginPage() {
             component="form"
             onSubmit={(e) => {
               e.preventDefault();
+              if (phone.length < 10) {
+                message.error("Please enter valid phone number");
+                return;
+              }
               handleLogin();
             }}
             spacing={3}
           >
             <Box>
-              <Typography variant="h3">Sign In</Typography>
+              <Typography variant="h4">Sign In</Typography>
 
               <Typography variant="body2" sx={{ mt: 1 }}>
                 Enter your credentials to continue
@@ -167,9 +179,10 @@ export default function LoginPage() {
 
             <CustomInput
               label="Mobile Number"
+              type="tel"
               fullWidth
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneChange}
             />
 
             <CustomInput
@@ -187,19 +200,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <CustomButton
-              // variant="contained"
-              // size="large"
-              // sx={{
-              //   py: 1.5,
-              // }}
-              sx={{
-                py: 1.5,
-              }}
-              type="submit"
-              loading={isPending}
-              // loading={isPending}
-            >
+            <CustomButton className="py-2!" type="submit" loading={isPending}>
               {isPending ? "Signing in..." : "Sign In"}
             </CustomButton>
             <Typography
