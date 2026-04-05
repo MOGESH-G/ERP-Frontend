@@ -1,5 +1,29 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap");
+
+/* Tailwind v4 theme layer */
+@theme {
+  /* Backgrounds */
+  --color-bg-base: var(--bg-base);
+  --color-bg-paper: var(--bg-paper);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-subtle: var(--bg-subtle);
+
+  /* Text */
+  --color-text-body: var(--text-body);
+  --color-text-header: var(--text-header);
+  --color-text-sub: var(--text-sub);
+
+  /* Borders */
+  --color-border-default: var(--border-default);
+  --color-border-subtle: var(--border-subtle);
+
+  /* Primary */
+  --color-primary-300: var(--amber-300);
+  --color-primary-400: var(--amber-400);
+  --color-primary-500: var(--amber-500);
+  --color-primary-700: var(--amber-700);
+}
 
 body {
   font-family: "Fraunces", serif;

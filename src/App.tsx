@@ -1,20 +1,21 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import PublicRoutes from "./routes/publicRoutes";
 import PrivateRoutes from "./routes/privateRoutes";
-import { useMemo, useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
 import { ThemeProvider } from "@mui/material";
-import { applyTheme, createAppTheme } from "./theme";
+import { getMuiTheme } from "./theme/getMuiTheme";
 import type { RootState } from "./store";
+import { applyThemeVariables } from "./theme/applyThemeVariables";
 
 const App = () => {
   const mode = useSelector((state: RootState) => state.theme.mode);
 
   useEffect(() => {
-    applyTheme(mode);
+    applyThemeVariables(mode);
   }, [mode]);
 
-  const theme = useMemo(() => createAppTheme(mode), [mode]);
+  const theme = useMemo(() => getMuiTheme(mode), [mode]);
 
   return (
     <ThemeProvider theme={theme}>

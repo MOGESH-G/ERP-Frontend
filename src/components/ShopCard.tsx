@@ -1,39 +1,54 @@
 import { Typography } from "@mui/material";
 import type { Shops } from "../types/shops";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
 
 const ShopCard = ({ shop }: { shop: Shops }) => {
   const navigate = useNavigate();
-  //   const theme = useTheme(); // now you can access custom palette
-  //   const isDark = theme.palette.mode === "dark";
-
-  //   const bg = isDark
-  //     ? theme.palette.custom.bgElevated
-  //     : theme.palette.custom.bgPaper;
-  //   const hoverBg = isDark
-  //     ? theme.palette.custom.bgPaper
-  //     : theme.palette.custom.bgElevated;
-  //   const borderColor = theme.palette.custom.amber300; // subtle amber border for both themes
-  //   const textColor = theme.palette.custom.textBody;
 
   return (
     <div
       onClick={() => navigate(`/shops/${shop.id}`)}
-      className={`w-full max-w-xs cursor-pointer rounded-xl border p-4 transition-all duration-200 shadow-sm hover:shadow-lg h-30 hover:bg-bgPaper`}
+      className={clsx(`
+        w-full max-w-xs
+        cursor-pointer
+        rounded-xl
+        p-4
+
+        bg-bg-paper
+        border border-border-subtle
+
+        transition-all duration-200
+        shadow-sm
+
+        hover:shadow-md
+        hover:-translate-y-0.5
+        hover:bg-bg-elevated
+
+        active:scale-[0.98]
+      `)}
     >
       <div className="flex flex-col gap-2">
+        {/* Title */}
         <Typography
           component="h3"
-          className="text-xl font-bold leading-tight"
-          //   style={{ color: theme.palette.custom.textHeader }}
+          className="
+            text-base font-semibold
+            text-text-header
+            leading-tight tracking-tight
+          "
         >
-          {shop.shop_code} - {shop.name.toUpperCase()}
+          {shop.shop_code} — {shop.name.toUpperCase()}
         </Typography>
 
+        {/* Address */}
         <Typography
           component="p"
-          className="text-sm"
-          //   style={{ color: theme.palette.custom.textSubHeader }}
+          className="
+            text-sm
+            text-text-sub
+            line-clamp-2
+          "
         >
           {shop.address}
         </Typography>

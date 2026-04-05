@@ -1,24 +1,14 @@
 import type { ReactNode, MouseEventHandler } from "react";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useTheme } from "@mui/material";
 import type { ButtonProps } from "@mui/material/Button";
 import clsx from "clsx";
 
-export type ButtonVariant =
-  | "primary"
-  | "secondary"
-  | "outline"
-  | "ghost"
-  | "danger"
-  | "success";
+export type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "danger" | "success";
 
 export type ButtonSize = "sm" | "md" | "lg";
 
-export interface CustomButtonProps extends Omit<
-  ButtonProps,
-  "variant" | "size" | "color"
-> {
+export interface CustomButtonProps extends Omit<ButtonProps, "variant" | "size" | "color"> {
   variant?: ButtonVariant;
   size?: ButtonSize;
   startIcon?: ReactNode;
@@ -53,79 +43,47 @@ export default function CustomButton({
   children,
   ...props
 }: CustomButtonProps) {
-  const theme = useTheme();
-
   if (!hasPermission) return null;
 
-  // 🎨 Semantic colors (similar to CustomInput)
-  const styles = {
-    primary: {
-      bg: theme.palette.primary.main,
-      text: "#fff",
-      border: "transparent",
-    },
-    secondary: {
-      bg: theme.palette.secondary.main,
-      text: "#fff",
-      border: "transparent",
-    },
-    outline: {
-      bg: "transparent",
-      text: theme.palette.primary.main,
-      border: theme.palette.primary.main,
-    },
-    ghost: {
-      bg: "transparent",
-      text: theme.palette.text.primary,
-      border: "transparent",
-    },
-    danger: {
-      bg: theme.palette.error.main,
-      text: "#fff",
-      border: "transparent",
-    },
-    success: {
-      bg: theme.palette.success.main,
-      text: "#fff",
-      border: "transparent",
-    },
-  };
+  const variantClasses: Record<ButtonVariant, string> = {
+    primary: "bg-[var(--color-primary-500)]! text-white hover:bg-[var(--color-primary-400)]!",
 
-  const current = styles[variant];
+    secondary:
+      "bg-[var(--color-bg-elevated)]! text-[var(--color-text-body)]!  hover:bg-[var(--color-bg-subtle)]!",
+
+    outline:
+      "border! border-[var(--color-border-default)]! text-[var(--color-text-body)]! hover:bg-[var(--color-bg-subtle)]!",
+
+    ghost: "text-[var(--color-text-body)]! hover:bg-[var(--color-bg-subtle)]!",
+
+    danger: "bg-[var(--color-danger-500)]! text-white hover:bg-[var(--color-danger-600)]!",
+
+    success: " bg-[var(--color-success-500)]! text-white hover:bg-[var(--color-success-600)]!",
+  };
 
   return (
     <Button
       type={type}
-      variant="contained" // keep consistent, override via styles
+      variant="contained"
       disableElevation
       fullWidth={fullWidth}
       disabled={disabled || loading}
       className={clsx(
-        "rounded-lg normal-case font-medium transition-all flex items-center justify-center gap-2",
+        "rounded-lg normal-case font-medium transition-all flex items-center justify-center gap-2 disabled:bg-bg-subtle disabled:text-text-sub",
         sizeClasses[size],
+        variantClasses[variant],
         fullWidth && "w-full",
         className,
       )}
-      style={{
-        backgroundColor: current.bg,
-        color: current.text,
-        border: `1px solid ${current.border}`,
-      }}
       {...props}
     >
-      {loading && (
-        <CircularProgress size={16} color="inherit" className="mr-1" />
-      )}
+      {loading && <CircularProgress size={16} color="inherit" className="mr-1" />}
 
-      {!loading && startIcon && (
-        <span className="flex items-center">{startIcon}</span>
-      )}
+      {!loading && startIcon && <span className="flex items-center">{startIcon}</span>}
 
       {children}
 
-      {!loading && endIcon && (
-        <span className="flex items-center">{endIcon}</span>
-      )}
+      {!loading && endIcon && <span className="flex items-center">{endIcon}</span>}
     </Button>
   );
 }

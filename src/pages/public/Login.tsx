@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { motion } from "motion/react";
 import GridBackground from "../../components/GridBackground";
 import { useLogin } from "../../hooks/auth";
@@ -15,7 +14,6 @@ const MotionBox = motion(Box);
 const MotionPaper = motion(Paper);
 
 export default function LoginPage() {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [phone, setPhone] = useState("");
@@ -74,7 +72,7 @@ export default function LoginPage() {
           flexDirection: "column",
           justifyContent: "center",
           px: 8,
-          borderRight: `1px solid ${theme.palette.custom.borderDefault}`,
+          borderRight: `1px solid var(--color-border-subtle)`,
           position: "relative",
           overflow: "hidden",
         }}
@@ -112,10 +110,7 @@ export default function LoginPage() {
           <Typography variant="h2" sx={{ color: "text.primary" }}>
             Every rupee.
             <br />
-            <Box
-              component="span"
-              sx={{ fontStyle: "italic", color: "primary.main" }}
-            >
+            <Box component="span" sx={{ fontStyle: "italic", color: "primary.main" }}>
               Accounted for.
             </Box>
           </Typography>
@@ -128,8 +123,8 @@ export default function LoginPage() {
               color: "text.secondary",
             }}
           >
-            Unified POS, inventory, GST compliance and accounting built
-            specifically for Indian retail businesses.
+            Unified POS, inventory, GST compliance and accounting built specifically for Indian
+            retail businesses.
           </Typography>
         </MotionBox>
       </Box>
@@ -153,8 +148,9 @@ export default function LoginPage() {
             width: "100%",
             maxWidth: 420,
             p: 4,
+            borderRadius: 2,
             bgcolor: "background.paper",
-            border: `1px solid ${theme.palette.custom.borderSubtle}`,
+            border: `1px solid var(--color-border-subtle)`,
           }}
         >
           <Stack
@@ -200,7 +196,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <CustomButton className="py-2!" type="submit" loading={isPending}>
+            <CustomButton className="py-3!" type="submit" loading={isPending}>
               {isPending ? "Signing in..." : "Sign In"}
             </CustomButton>
             <Typography
