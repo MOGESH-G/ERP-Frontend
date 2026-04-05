@@ -1,4 +1,8 @@
-import { createTheme, type ThemeOptions, type Theme } from "@mui/material/styles";
+import {
+  createTheme,
+  type ThemeOptions,
+  type Theme,
+} from "@mui/material/styles";
 import { DARK, LIGHT } from "./colors";
 
 // Semantic text classes (Tailwind-like)
@@ -46,9 +50,29 @@ export const layoutClasses = {
   container: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
 };
 
+export const applyCssVariables = (tokens: Record<string, string>) => {
+  const root = document.documentElement;
+
+  Object.entries(tokens).forEach(([key, value]) => {
+    root.style.setProperty(`--${key}`, value);
+  });
+};
+
+export const applyTheme = (mode: "light" | "dark") => {
+  const tokens = mode === "dark" ? DARK : LIGHT;
+
+  const root = document.documentElement;
+  // Apply CSS variables
+  Object.entries(tokens).forEach(([key, value]) => {
+    root.style.setProperty(`--${key}`, value);
+  });
+
+  // Toggle Tailwind dark class
+  root.classList.toggle("dark", mode === "dark");
+};
+
 export const createAppTheme = (mode: "light" | "dark") => {
   const RAW = mode === "dark" ? DARK : LIGHT;
-
   const themeOptions: ThemeOptions = {
     palette: {
       mode,

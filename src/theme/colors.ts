@@ -85,24 +85,23 @@ export const DARK: Palette["custom"] = {
 
 // LIGHT palette
 export const LIGHT: Palette["custom"] = {
-  // Backgrounds
-  bgBase: "#FAF8F3",
-  bgPaper: "#FFFFFF",
-  bgElevated: "#F5F1E8",
-  bgSubtle: "#EFE8D9",
+  bgBase: "#FAF8F3", // main background, soft off-white
+  bgPaper: "#FFFFFF", // cards, modals, surfaces
+  bgElevated: "#F5F1E8", // for hover, elevated cards
+  bgSubtle: "#EFE8D9", // subtle containers, tooltips
 
   // Borders
   borderDefault: "rgba(0,0,0,0.08)",
   borderSubtle: "rgba(0,0,0,0.05)",
-  borderFocus: "#D99B32",
+  borderFocus: "#D99B32", // gold for focus states
 
   // Amber colors
   amber300: "#F5C842",
   amber400: "#E8AF4A",
-  amber500: "#D99B32",
+  amber500: "#D99B32", // primary gold
   amber700: "#B8741A",
-  amberMuted: "rgba(217,155,50,0.12)",
-  amberGhost: "rgba(217,155,50,0.04)",
+  amberMuted: "rgba(217,155,50,0.12)", // soft background highlights
+  amberGhost: "rgba(217,155,50,0.04)", // ultra subtle hints
 
   // Hints / feedback
   textHint: "rgba(184,116,26,0.6)",
