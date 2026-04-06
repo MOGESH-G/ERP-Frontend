@@ -1,7 +1,5 @@
-import { Typography } from "@mui/material";
 import type { Shops } from "../types/shops";
 import { useNavigate } from "react-router-dom";
-import clsx from "clsx";
 
 const ShopCard = ({ shop }: { shop: Shops }) => {
   const navigate = useNavigate();
@@ -9,8 +7,9 @@ const ShopCard = ({ shop }: { shop: Shops }) => {
   return (
     <div
       onClick={() => navigate(`/shops/${shop.id}`)}
-      className={clsx(`
+      className={`
         w-full max-w-xs
+        h-full
         cursor-pointer
         rounded-xl
         p-4
@@ -18,40 +17,26 @@ const ShopCard = ({ shop }: { shop: Shops }) => {
         bg-bg-paper
         border border-border-subtle
 
-        transition-all duration-200
-        shadow-sm
-
-        hover:shadow-md
-        hover:-translate-y-0.5
-        hover:bg-bg-elevated
-
-        active:scale-[0.98]
-      `)}
+        transition-transform duration-300 ease-out
+        shadow-lg
+        hover:shadow-xl
+        hover:-translate-y-1
+        active:scale-95 hover:border-primary-500
+      `}
     >
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col justify-between h-full">
         {/* Title */}
-        <Typography
-          component="h3"
+        <p
           className="
             text-base font-semibold
-            text-text-header
-            leading-tight tracking-tight
+            tracking-tight
           "
         >
-          {shop.shop_code} — {shop.name.toUpperCase()}
-        </Typography>
+          {shop.shop_code} - {shop.name.toUpperCase()}
+        </p>
 
-        {/* Address */}
-        <Typography
-          component="p"
-          className="
-            text-sm
-            text-text-sub
-            line-clamp-2
-          "
-        >
-          {shop.address}
-        </Typography>
+        {/* Phone */}
+        <p className="text-secondary-500 text-sm">{shop.phone}</p>
       </div>
     </div>
   );

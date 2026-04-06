@@ -12,7 +12,7 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
 // import { usePermission } from "../hooks/usePermisson";
-import { APP_ROUTES } from "./appRoutes";
+import { APP_ROUTES, SHOP_ROUTES, type AppRoute } from "./appRoutes";
 // import { verifyUser } from "../api/auth";
 // import { loginSuccess, logoutSuccess } from "../slices/authSlice";
 // import type { RootState } from "../store";
@@ -46,8 +46,18 @@ interface PrivateRoutesProps {
 //   return { isAuthenticated: !!token, user: null };
 // }
 
-const AppLayout = lazy(() => import("../components/layouts/AppLayout"));
-const HomePage = lazy(() => import("../pages/private/Home"));
+const AppLayout: React.ComponentType<{ children: ReactNode }> = lazy(
+  () => import("../components/layouts/AppLayout"),
+);
+const HomePage = lazy(() => import("../pages/app/Home"));
+
+const renderRoutes = (routes: AppRoute[]) => {
+  return routes.map(({ path, element: Component, children }) => (
+    <Route key={path} path={path} element={<Component />}>
+      {children && renderRoutes(children)}
+    </Route>
+  ));
+};
 
 // Temporarily disabled for development without backend
 // interface AuthGuardProps {
@@ -84,8 +94,8 @@ const HomePage = lazy(() => import("../pages/private/Home"));
 //   return <Page />;
 // }
 
-const ForbiddenPage = lazy(() => import("../pages/private/Forbidden"));
-const NotFound = lazy(() => import("../pages/private/NotFound"));
+const ForbiddenPage = lazy(() => import("../pages/app/Forbidden"));
+const NotFound = lazy(() => import("../pages/app/NotFound"));
 
 // Set to true to disable auth checks for development
 const DISABLE_AUTH_CHECKS = true;
@@ -147,17 +157,28 @@ export default function PrivateRoutes({
     return (
       <Suspense fallback={<Loader />}>
         <Routes>
-          <Route index element={<Navigate to="home" replace />} />
-          <Route path="home" element={<HomePage />} />
+          {/* Main app layout */}
+          <Route path="/" element={<AppLayout />}>
+            {/* Default page */}
+            {/* <Route index element={<Navigate to="home" replace />} /> */}
 
-          {APP_ROUTES.map(({ path, element }) => (
-            <Route key={path} path={path} element={<element />} />
-          ))}
+            {/* Home page */}
+            <Route path="/" element={<HomePage />} />
 
-          <Route path="shops/*" element={<AppLayout />} />
+            {/* Dynamically load APP_ROUTES */}
+            {renderRoutes(APP_ROUTES)}
+
+            {/* You can nest children for users, roles, etc. */}
+          </Route>
+
+          {/* Shop routes can have their own layout */}
+          {/* <Route path="/shops/:shopId/*" element={<ShopLayout />}>
+            {SHOP_ROUTES.map(({ path, element }) => (
+              <Route key={path} path={path} element={<element />} />
+            ))}
+          </Route> */}
 
           <Route path="forbidden" element={<ForbiddenPage />} />
-
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>

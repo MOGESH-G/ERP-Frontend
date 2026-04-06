@@ -1,77 +1,136 @@
 export const tokens = {
   light: {
     bg: {
-      base: "#FAF8F3",
+      base: "#F7F6F2",
       paper: "#FFFFFF",
-      elevated: "#F5F1E8",
-      subtle: "#EFE8D9",
+      elevated: "#FFFFFF",
+      subtle: "#F1EFE9",
+      inverse: "#1F1A12",
     },
+
     border: {
-      default: "rgba(0,0,0,0.08)",
-      subtle: "rgba(0,0,0,0.05)",
-      focus: "#D99B32",
+      default: "#E4E0D7",
+      subtle: "#EFECE4",
+      strong: "#D6D1C4",
+      focus: "#2563EB",
     },
-    amber: {
-      300: "#F5C842",
-      400: "#E8AF4A",
-      500: "#D99B32",
-      700: "#B8741A",
-      muted: "rgba(217,155,50,0.12)",
-      ghost: "rgba(217,155,50,0.04)",
+
+    primary: {
+      50: "#EFF6FF",
+      100: "#DBEAFE",
+      500: "#2563EB",
+      600: "#1D4ED8",
+      700: "#1E40AF",
+      contrast: "#FFFFFF",
     },
+
+    secondary: {
+      100: "#F1F5F9",
+      300: "#CBD5E1",
+      500: "#64748B",
+      700: "#334155",
+    },
+
+    accent: {
+      300: "#C4B5FD",
+      500: "#8B5CF6",
+      700: "#6D28D9",
+      muted: "rgba(139,92,246,0.12)",
+      ghost: "rgba(139,92,246,0.05)",
+    },
+
     text: {
-      header: "#1F1A12",
-      subHeader: "rgba(31,26,18,0.6)",
-      body: "#1F1A12",
-      hint: "rgba(184,116,26,0.6)",
-      info: "#0284C7",
+      header: "#111827",
+      subHeader: "#4B5563",
+      body: "#1F2937",
+      hint: "#9CA3AF",
+      inverse: "#FFFFFF",
+
+      info: "#2563EB",
+      success: "#16A34A",
       warning: "#D97706",
       error: "#DC2626",
-      success: "#16A34A",
     },
+
     state: {
-      successMuted: "rgba(22,163,74,0.12)",
-      errorMuted: "rgba(220,38,38,0.12)",
-      warningMuted: "rgba(217,119,6,0.12)",
-      infoMuted: "rgba(2,132,199,0.12)",
+      successBg: "#ECFDF5",
+      errorBg: "#FEF2F2",
+      warningBg: "#FFFBEB",
+      infoBg: "#EFF6FF",
+    },
+
+    action: {
+      hover: "rgba(0,0,0,0.04)",
+      active: "rgba(0,0,0,0.08)",
+      disabled: "rgba(0,0,0,0.26)",
+      disabledBg: "rgba(0,0,0,0.12)",
     },
   },
 
   dark: {
     bg: {
-      base: "#0A0804",
-      paper: "#100D08",
-      elevated: "#1A1408",
-      subtle: "#151009",
+      base: "#0B0F14",
+      subtle: "#111827",
+      paper: "#1F2937",
+      elevated: "#374151",
+      inverse: "#F9FAFB",
     },
+
     border: {
-      default: "rgba(217,155,50,0.15)",
-      subtle: "rgba(255,255,255,0.07)",
-      focus: "rgba(217,155,50,0.6)",
+      default: "#1F2937",
+      subtle: "#111827",
+      strong: "#374151",
+      focus: "#3B82F6",
     },
-    amber: {
-      300: "#F5C842",
-      400: "#E8AF4A",
-      500: "#D99B32",
-      700: "#B8741A",
-      muted: "rgba(217,155,50,0.15)",
-      ghost: "rgba(217,155,50,0.06)",
+
+    primary: {
+      50: "#172554",
+      100: "#1E3A8A",
+      500: "#3B82F6",
+      600: "#2563EB",
+      700: "#1D4ED8",
+      contrast: "#FFFFFF",
+    },
+
+    secondary: {
+      100: "#1F2937",
+      300: "#374151",
+      500: "#9CA3AF",
+      700: "#E5E7EB",
+    },
+
+    accent: {
+      300: "#A78BFA",
+      500: "#8B5CF6",
+      700: "#7C3AED",
+      muted: "rgba(139,92,246,0.15)",
+      ghost: "rgba(139,92,246,0.06)",
     },
     text: {
-      header: "#F0E6D0",
-      subHeader: "rgba(240,230,208,0.55)",
-      body: "#F0E6D0",
-      hint: "rgba(217,155,50,0.5)",
-      info: "#7DD3FC",
-      warning: "#FCD34D",
-      error: "#EF4444",
+      header: "#F9FAFB",
+      subHeader: "#9CA3AF",
+      body: "#E5E7EB",
+      hint: "#6B7280",
+      inverse: "#111827",
+
+      info: "#60A5FA",
       success: "#4ADE80",
+      warning: "#FACC15",
+      error: "#F87171",
     },
+
     state: {
-      successMuted: "rgba(74,222,128,0.12)",
-      errorMuted: "rgba(239,68,68,0.1)",
-      warningMuted: "rgba(252,211,77,0.1)",
-      infoMuted: "rgba(125,211,252,0.1)",
+      successBg: "rgba(74,222,128,0.12)",
+      errorBg: "rgba(248,113,113,0.12)",
+      warningBg: "rgba(250,204,21,0.12)",
+      infoBg: "rgba(96,165,250,0.12)",
+    },
+
+    action: {
+      hover: "rgba(255,255,255,0.06)",
+      active: "rgba(255,255,255,0.12)",
+      disabled: "rgba(255,255,255,0.3)",
+      disabledBg: "rgba(255,255,255,0.1)",
     },
   },
 };

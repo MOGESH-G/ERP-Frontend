@@ -8,6 +8,8 @@ export const layoutClasses = {
   row: "flex items-center gap-2",
   container: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8",
   button: "px-4 py-2 rounded-md font-medium transition-colors",
-  buttonPrimary: "bg-amber-500 text-white hover:bg-amber-600 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2",
-  buttonSecondary: "bg-bgElevated text-textBody border border-borderDefault hover:bg-bgSubtle focus:ring-2 focus:ring-amber-500 focus:ring-offset-2",
+  buttonPrimary:
+    "bg-primary-500 text-white hover:bg-primary-600 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
+  buttonSecondary:
+    "bg-bgElevated text-textBody border border-borderDefault hover:bg-bgSubtle focus:ring-2 focus:ring-primary-500 focus:ring-offset-2",
 };

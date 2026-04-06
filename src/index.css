@@ -1,28 +1,64 @@
 @import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&display=swap");
 
-/* Tailwind v4 theme layer */
 @theme {
-  /* Backgrounds */
+  /* ================= BACKGROUNDS ================= */
   --color-bg-base: var(--bg-base);
   --color-bg-paper: var(--bg-paper);
   --color-bg-elevated: var(--bg-elevated);
   --color-bg-subtle: var(--bg-subtle);
+  --color-bg-inverse: var(--bg-inverse);
 
-  /* Text */
+  /* ================= TEXT ================= */
   --color-text-body: var(--text-body);
   --color-text-header: var(--text-header);
-  --color-text-sub: var(--text-sub);
+  --color-text-sub: var(--text-subHeader);
+  --color-text-hint: var(--text-hint);
+  --color-text-inverse: var(--text-inverse);
 
-  /* Borders */
+  /* ================= BORDERS ================= */
   --color-border-default: var(--border-default);
   --color-border-subtle: var(--border-subtle);
+  --color-border-strong: var(--border-strong);
+  --color-border-focus: var(--border-focus);
 
-  /* Primary */
-  --color-primary-300: var(--amber-300);
-  --color-primary-400: var(--amber-400);
-  --color-primary-500: var(--amber-500);
-  --color-primary-700: var(--amber-700);
+  /* ================= PRIMARY (BLUE - ACTIONS) ================= */
+  --color-primary-50: var(--primary-50);
+  --color-primary-100: var(--primary-100);
+  --color-primary-500: var(--primary-500);
+  --color-primary-600: var(--primary-600);
+  --color-primary-700: var(--primary-700);
+  --color-primary-contrast: var(--primary-contrast);
+
+  /* ================= SECONDARY (NEUTRAL / GRAY) ================= */
+  --color-secondary-100: var(--secondary-100);
+  --color-secondary-300: var(--secondary-300);
+  --color-secondary-500: var(--secondary-500);
+  --color-secondary-700: var(--secondary-700);
+
+  /* ================= ACCENT (PURPLE - HIGHLIGHT) ================= */
+  --color-accent-300: var(--accent-300);
+  --color-accent-500: var(--accent-500);
+  --color-accent-700: var(--accent-700);
+  --color-accent-muted: var(--accent-muted);
+  --color-accent-ghost: var(--accent-ghost);
+
+  /* ================= STATE COLORS ================= */
+  --color-success: var(--text-success);
+  --color-error: var(--text-error);
+  --color-warning: var(--text-warning);
+  --color-info: var(--text-info);
+
+  --color-success-bg: var(--state-successBg);
+  --color-error-bg: var(--state-errorBg);
+  --color-warning-bg: var(--state-warningBg);
+  --color-info-bg: var(--state-infoBg);
+
+  /* ================= ACTION STATES ================= */
+  --color-action-hover: var(--action-hover);
+  --color-action-active: var(--action-active);
+  --color-action-disabled: var(--action-disabled);
+  --color-action-disabledBg: var(--action-disabledBg);
 }
 
 body {

@@ -12,8 +12,9 @@ export interface AppRoute {
   title?: string;
 }
 
-const DashboardPage = lazy(() => import("../pages/private/Dashboard"));
-// const EmployeesPage = lazy(() => import("../pages/private/EmployeesPage"));
+const DashboardPage = lazy(() => import("../pages/app/Dashboard"));
+const ProfilePage = lazy(() => import("../pages/app/users/Profile"));
+const PasswordPage = lazy(() => import("../pages/app/users/ChangePassword"));
 // const SettingsPage = lazy(() => import("../pages/private/SettingsPage"));
 // const ProfilePage = lazy(() => import("../pages/private/ProfilePage"));
 // const ReportsPage = lazy(() => import("../pages/private/ReportsPage"));
@@ -27,28 +28,53 @@ export const APP_ROUTES: AppRoute[] = [
     element: DashboardPage,
     resource: "dashboard",
     action: "view",
-
     label: "Dashboard",
-    // icon: <DashboardIcon />,
     showInMenu: true,
   },
-  //   {
-  //     path: "users",
-  //     element: UsersPage,
-  //     resource: "users",
-  //     action: "view",
+  {
+    path: "profile",
+    element: ProfilePage,
+    resource: "profile",
+    action: "view",
+    label: "Profile",
+    showInMenu: true,
+  },
+  {
+    path: "profile/change-password",
+    element: PasswordPage,
+    resource: "change-password",
+    action: "view",
+    label: "Change Password",
+    showInMenu: true,
+  },
+];
 
-  //     label: "Users",
-  //     icon: <PeopleIcon />,
-  //     showInMenu: true,
-
-  //     children: [
-  //       {
-  //         path: "create",
-  //         element: CreateUserPage,
-  //         resource: "users",
-  //         action: "create",
-  //       },
-  //     ],
-  //   },
+export const SHOP_ROUTES: AppRoute[] = [
+  // {
+  //   path: "list",
+  //   element: lazy(() => import("../pages/app/shops/List")),
+  //   resource: "shops",
+  //   action: "view",
+  //   label: "Shop List",
+  //   showInMenu: true,
+  // },
+  // {
+  //   path: "create",
+  //   element: lazy(() => import("../pages/app/shops/Create")),
+  //   resource: "shops",
+  //   action: "create",
+  //   label: "Create Shop",
+  // },
+  // {
+  //   path: ":id",
+  //   element: lazy(() => import("../pages/app/shops/View")),
+  //   resource: "shops",
+  //   action: "view",
+  // },
+  // {
+  //   path: ":id/edit",
+  //   element: lazy(() => import("../pages/app/shops/Edit")),
+  //   resource: "shops",
+  //   action: "update",
+  // },
 ];

@@ -1,31 +1,17 @@
-import { Box, Toolbar } from "@mui/material";
+import Breadcrumbs from "../Breadcrumb";
+import Header from "./AppHeader";
 import { Outlet } from "react-router-dom";
 
-import Header from "./Header";
-import Sidebar from "./Sidebar";
-
-const drawerWidth = 240;
-
-export default function AppLayout() {
+const AppLayout = () => {
   return (
-    <Box sx={{ display: "flex" }}>
-      <Header drawerWidth={drawerWidth} />
-
-      <Sidebar drawerWidth={drawerWidth} />
-
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: 3,
-          width: `calc(100% - ${drawerWidth}px)`,
-        }}
-      >
-        {/* pushes content below appbar */}
-        <Toolbar />
-
+    <div className="flex flex-col">
+      <Header />
+      <div className="flex-1 flex flex-col px-6 min-h-screen bg-bg-subtle text-text-body overflow-auto">
+        <Breadcrumbs rootDir="/app" />
         <Outlet />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
-}
+};
+
+export default AppLayout;
