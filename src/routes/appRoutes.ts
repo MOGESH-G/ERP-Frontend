@@ -15,6 +15,8 @@ export interface AppRoute {
 const DashboardPage = lazy(() => import("../pages/app/Dashboard"));
 const ProfilePage = lazy(() => import("../pages/app/users/Profile"));
 const PasswordPage = lazy(() => import("../pages/app/users/ChangePassword"));
+const UsersPage = lazy(() => import("../pages/app/users/Users"));
+const CreateUserPage = lazy(() => import("../pages/app/users/CreateUser"));
 // const SettingsPage = lazy(() => import("../pages/private/SettingsPage"));
 // const ProfilePage = lazy(() => import("../pages/private/ProfilePage"));
 // const ReportsPage = lazy(() => import("../pages/private/ReportsPage"));
@@ -45,6 +47,22 @@ export const APP_ROUTES: AppRoute[] = [
     resource: "change-password",
     action: "view",
     label: "Change Password",
+    showInMenu: true,
+  },
+  {
+    path: "users",
+    element: UsersPage,
+    resource: "users",
+    action: "view",
+    label: "Create User",
+    showInMenu: true,
+  },
+  {
+    path: "users/create-user",
+    element: CreateUserPage,
+    resource: "create-user",
+    action: "create",
+    label: "Create User",
     showInMenu: true,
   },
 ];

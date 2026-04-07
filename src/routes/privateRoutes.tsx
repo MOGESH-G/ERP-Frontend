@@ -163,7 +163,7 @@ export default function PrivateRoutes({
             {/* <Route index element={<Navigate to="home" replace />} /> */}
 
             {/* Home page */}
-            <Route path="/" element={<HomePage />} />
+            <Route index element={<HomePage />} />
 
             {/* Dynamically load APP_ROUTES */}
             {renderRoutes(APP_ROUTES)}

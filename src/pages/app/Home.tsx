@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import CustomAccordion from "../../components/CustomAccordion";
 import type { Shops } from "../../types/shops";
 import ShopCard from "../../components/ShopCard";
-import CustomButton from "../../components/CustomButton";
-import { FiPlus } from "react-icons/fi";
+import { FiEye, FiLock, FiUser, FiUserPlus } from "react-icons/fi";
 
 const Home = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [shops, setShops] = useState<Shops[]>([
     {
       id: "1",
@@ -92,10 +92,6 @@ const Home = () => {
 
   const navigate = useNavigate();
 
-  const handleNavigate = (path: string) => {
-    navigate(path);
-  };
-
   return (
     <main className="flex-1 overflow-y-auto p-6">
       <div className="max-w-5/6 mx-auto">
@@ -117,14 +113,7 @@ const Home = () => {
                   ))}
                 </ul>
 
-                <CustomButton
-                  onClick={() => handleNavigate("/app/shops/create")}
-                  variant="ghost"
-                  contentAlign="start"
-                  startIcon={<FiPlus />}
-                >
-                  Create New Shop
-                </CustomButton>
+                {/* Shops create disabled - route not configured */}
               </div>
             </CustomAccordion>
 
@@ -133,29 +122,70 @@ const Home = () => {
               <ul className="space-y-2">
                 <li>
                   <button
-                    onClick={() => handleNavigate("/app/profile")}
+                    onClick={() => navigate("/app/profile")}
                     className="
                       w-full text-left px-4 py-2 rounded-lg
+                      flex gap-2 items-center
                       bg-bg-elevated
                       hover:bg-bg-subtle
                       transition-all duration-200
                     "
                   >
-                    Update Your Details
+                    <FiUser />
+                    View Profile Details
                   </button>
                 </li>
 
                 <li>
                   <button
-                    onClick={() => handleNavigate("/app/change-password")}
+                    onClick={() => navigate("/app/profile/change-password")}
                     className="
                       w-full text-left px-4 py-2 rounded-lg
+                      flex gap-2 items-center
                       bg-bg-elevated
                       hover:bg-bg-subtle
                       transition-all duration-200
                     "
                   >
+                    <FiLock />
                     Change Password
+                  </button>
+                </li>
+              </ul>
+            </CustomAccordion>
+
+            {/* Users */}
+            <CustomAccordion title="Users">
+              <ul className="space-y-2">
+                <li>
+                  <button
+                    onClick={() => navigate("/app/users")}
+                    className="
+                      w-full text-left px-4 py-2 rounded-lg
+                      flex gap-2 items-center
+                      bg-bg-elevated
+                      hover:bg-bg-subtle
+                      transition-all duration-200
+                    "
+                  >
+                    <FiEye />
+                    View all users
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    onClick={() => navigate("users/create-user")}
+                    className="
+                      w-full text-left px-4 py-2 rounded-lg
+                      flex gap-2 items-center
+                      bg-bg-elevated
+                      hover:bg-bg-subtle
+                      transition-all duration-200
+                    "
+                  >
+                    <FiUserPlus />
+                    Create User
                   </button>
                 </li>
               </ul>
@@ -166,7 +196,7 @@ const Home = () => {
               <ul className="space-y-2">
                 <li>
                   <button
-                    onClick={() => handleNavigate("/app/dashboard")}
+                    onClick={() => navigate("/app/dashboard")}
                     className="
                       w-full text-left px-4 py-2 rounded-lg
                       bg-bg-elevated
@@ -180,7 +210,7 @@ const Home = () => {
 
                 <li>
                   <button
-                    onClick={() => handleNavigate("/app/forbidden")}
+                    onClick={() => navigate("/app/forbidden")}
                     className="
                       w-full text-left px-4 py-2 rounded-lg
                       bg-bg-elevated

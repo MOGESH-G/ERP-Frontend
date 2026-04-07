@@ -115,7 +115,7 @@ export default function CustomInput({
       {(fixedErrorSpace || showError) && (
         <span
           className={clsx(
-            "ml-3 text-sm transition-all min-h-5 rounded px-1",
+            "ml-2 text-sm transition-all min-h-5 rounded px-1",
             showError ? "opacity-100 bg-red text-red-700" : fixedErrorSpace ? "opacity-0" : "",
             helperTextClassName,
           )}

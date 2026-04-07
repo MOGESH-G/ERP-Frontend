@@ -10,7 +10,7 @@ interface CustomAccordionProps {
 
 const CustomAccordion = ({ title, children, defaultExpanded = false }: CustomAccordionProps) => {
   return (
-    <Accordion defaultExpanded={defaultExpanded} sx={{ mb: 2 }}>
+    <Accordion defaultExpanded={defaultExpanded} sx={{ mb: 2, borderRadius: 2, boxShadow: 3 }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography variant="subtitle1" fontWeight={600}>
           {title}
