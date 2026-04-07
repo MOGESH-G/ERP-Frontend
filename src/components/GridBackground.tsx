@@ -10,6 +10,11 @@ export default function GridBackground() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const theme = useTheme();
 
+  const scanLineColor =
+    theme.palette.mode === "dark"
+      ? "rgba(59,130,246,0.2)" // fallback for primary-500 in dark
+      : "rgba(37,99,235,0.2)"; // primary-500 in light
+
   useEffect(() => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext("2d")!;
@@ -43,7 +48,8 @@ export default function GridBackground() {
         const x = col * cw;
         const y = row * ch;
 
-        ctx.strokeStyle = `rgba(217,155,50,${cell.opacity})`;
+        // 🎨 use theme primary color with opacity
+        ctx.strokeStyle = `rgba(${theme.palette.mode === "dark" ? "59,130,246" : "37,99,235"},${cell.opacity})`;
         ctx.lineWidth = 0.5;
 
         ctx.strokeRect(x + 0.5, y + 0.5, cw - 1, ch - 1);
@@ -89,7 +95,7 @@ export default function GridBackground() {
           left: 0,
           right: 0,
           height: 120,
-          background: "linear-gradient(to bottom, transparent, rgba(217,155,50,0.08), transparent)",
+          background: `linear-gradient(to bottom, transparent, ${scanLineColor}, transparent)`,
         }}
       />
     </Box>

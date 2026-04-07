@@ -1,14 +1,6 @@
 import axios from "axios";
 import axiosInstance from "../config/axiosConfig";
-
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  roles: string[];
-  permissions: Record<string, Record<string, boolean>>;
-  shop_id?: string;
-}
+import type { User } from "../types/user";
 
 export interface LoginResponse {
   user: User;

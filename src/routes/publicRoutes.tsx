@@ -18,11 +18,11 @@ function useAuth(): { isAuthenticated: boolean } {
   return { isAuthenticated: !!token };
 }
 
-const LoginPage = lazy(() => import("../pages/public/Login"));
+const LoginPage = lazy(() => import("../pages/auth/Login"));
 // const RegisterPage = lazy(() => import("../pages/public/Register"));
-const ForgotPasswordPage = lazy(() => import("../pages/public/ForgotPassword"));
+const ForgotPasswordPage = lazy(() => import("../pages/auth/ForgotPassword"));
 // const ResetPasswordPage  = lazy(() => import("../pages/public/ResetPassword"));
-const NotFoundPage = lazy(() => import("../pages/public/NotFound"));
+const NotFoundPage = lazy(() => import("../pages/auth/NotFound"));
 
 // ─── Public route definitions ─────────────────────────────────────────────────
 

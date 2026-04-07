@@ -1,20 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   type ReactNode,
   type LazyExoticComponent,
   lazy,
   Suspense,
-  useEffect,
-  useRef,
-  useState,
+  // useEffect,
+  // useRef,
+  // useState,
 } from "react";
-import { Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+// import { useDispatch, useSelector } from "react-redux";
 import Loader from "../components/Loader";
-import { usePermission } from "../hooks/usePermisson";
-import { APP_ROUTES } from "./appRoutes";
-import { verifyUser } from "../api/auth";
-import { loginSuccess, logoutSuccess } from "../slices/authSlice";
-import type { RootState } from "../store";
+// import { usePermission } from "../hooks/usePermisson";
+import { APP_ROUTES, SHOP_ROUTES, type AppRoute } from "./appRoutes";
+// import { verifyUser } from "../api/auth";
+// import { loginSuccess, logoutSuccess } from "../slices/authSlice";
+// import type { RootState } from "../store";
 
 export interface PrivateRouteConfig {
   path: string;
@@ -39,132 +40,181 @@ interface PrivateRoutesProps {
   forbiddenPath?: string;
 }
 
-function useAuth(): { isAuthenticated: boolean; user: AuthUser | null } {
-  const token = localStorage.getItem("token");
-  return { isAuthenticated: !!token, user: null };
-}
+// Temporarily disabled for development without backend
+// function useAuth(): { isAuthenticated: boolean; user: AuthUser | null } {
+//   const token = localStorage.getItem("token");
+//   return { isAuthenticated: !!token, user: null };
+// }
 
-const AppLayout = lazy(() => import("../components/layouts/AppLayout"));
-const HomePage = lazy(() => import("../pages/private/Home"));
+const AppLayout: React.ComponentType<{ children: ReactNode }> = lazy(
+  () => import("../components/layouts/AppLayout"),
+);
+const HomePage = lazy(() => import("../pages/app/Home"));
 
-interface AuthGuardProps {
-  isAuthenticated: boolean;
-  loginPath: string;
-}
+const renderRoutes = (routes: AppRoute[]) => {
+  return routes.map(({ path, element: Component, children }) => (
+    <Route key={path} path={path} element={<Component />}>
+      {children && renderRoutes(children)}
+    </Route>
+  ));
+};
 
-function AuthGuard({ isAuthenticated, loginPath }: AuthGuardProps): ReactNode {
-  if (!isAuthenticated) {
-    return <Navigate to={loginPath} replace />;
-  }
-  return <Outlet />;
-}
+// Temporarily disabled for development without backend
+// interface AuthGuardProps {
+//   isAuthenticated: boolean;
+//   loginPath: string;
+// }
 
-interface PermissionGuardProps {
-  resource: string;
-  action: string;
-  forbiddenPath: string;
-  element: LazyExoticComponent<() => ReactNode>;
-}
+// function AuthGuard({ isAuthenticated, loginPath }: AuthGuardProps): ReactNode {
+//   if (!isAuthenticated) {
+//     return <Navigate to={loginPath} replace />;
+//   }
+//   return <Outlet />;
+// }
 
-function PermissionGuard({
-  resource,
-  action,
-  forbiddenPath,
-  element: Page,
-}: PermissionGuardProps): ReactNode {
-  const { can } = usePermission();
-  console.log("Checking permission for resource:", resource, "action:", action);
-  if (!can(resource, action)) {
-    return <Navigate to={forbiddenPath} replace />;
-  }
+// interface PermissionGuardProps {
+//   resource: string;
+//   action: string;
+//   forbiddenPath: string;
+//   element: LazyExoticComponent<() => ReactNode>;
+// }
 
-  return <Page />;
-}
+// function PermissionGuard({
+//   resource,
+//   action,
+//   forbiddenPath,
+//   element: Page,
+// }: PermissionGuardProps): ReactNode {
+//   const { can } = usePermission();
+//   console.log("Checking permission for resource:", resource, "action:", action);
+//   if (!can(resource, action)) {
+//     return <Navigate to={forbiddenPath} replace />;
+//   }
 
-const ForbiddenPage = lazy(() => import("../pages/private/Forbidden"));
-const NotFound = lazy(() => import("../pages/private/NotFound"));
+//   return <Page />;
+// }
+
+const ForbiddenPage = lazy(() => import("../pages/app/Forbidden"));
+const NotFound = lazy(() => import("../pages/app/NotFound"));
+
+// Set to true to disable auth checks for development
+const DISABLE_AUTH_CHECKS = true;
 
 export default function PrivateRoutes({
   isAuthenticated: isAuthProp,
   loginPath = "/auth/login",
   forbiddenPath = "/app/forbidden",
 }: PrivateRoutesProps): ReactNode {
-  const { isAuthenticated: isAuthFromHook } = useAuth();
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const currentUser = useSelector((state: RootState) => state.auth.user);
-  const currentToken = useSelector((state: RootState) => state.auth.token);
-  const [isVerifying, setIsVerifying] = useState(true);
-  const verificationStarted = useRef(false);
+  // Temporarily disabled for development without backend
+  // const { isAuthenticated: isAuthFromHook } = useAuth();
+  // const dispatch = useDispatch();
+  // const navigate = useNavigate();
+  // const currentUser = useSelector((state: RootState) => state.auth.user);
+  // const currentToken = useSelector((state: RootState) => state.auth.token);
+  // const [isVerifying, setIsVerifying] = useState(true);
+  // const verificationStarted = useRef(false);
 
-  const isAuthenticated = isAuthProp !== undefined ? isAuthProp : isAuthFromHook;
+  // const isAuthenticated = isAuthProp !== undefined ? isAuthProp : isAuthFromHook;
 
-  useEffect(() => {
-    if (verificationStarted.current) {
-      return;
-    }
+  // useEffect(() => {
+  //   if (verificationStarted.current) {
+  //     return;
+  //   }
 
-    verificationStarted.current = true;
+  //   verificationStarted.current = true;
 
-    const verify = async () => {
-      if (!currentToken) {
-        setIsVerifying(false);
-        return;
-      }
+  //   const verify = async () => {
+  //     if (!currentToken) {
+  //       setIsVerifying(false);
+  //       return;
+  //     }
 
-      if (currentUser) {
-        setIsVerifying(false);
-        return;
-      }
+  //     if (currentUser) {
+  //       setIsVerifying(false);
+  //       return;
+  //     }
 
-      try {
-        const user = await verifyUser();
-        dispatch(loginSuccess({ user, token: currentToken }));
-      } catch (err) {
-        console.error("Verify user failed", err);
-        dispatch(logoutSuccess());
-        navigate("/auth/login", { replace: true });
-      } finally {
-        setIsVerifying(false);
-      }
-    };
+  //     try {
+  //       const user = await verifyUser();
+  //       dispatch(loginSuccess({ user, token: currentToken }));
+  //     } catch (err) {
+  //       console.error("Verify user failed", err);
+  //       dispatch(logoutSuccess());
+  //       navigate("/auth/login", { replace: true });
+  //     } finally {
+  //       setIsVerifying(false);
+  //     }
+  //   };
 
-    verify();
-  }, [currentToken, currentUser, dispatch, navigate]);
+  //   verify();
+  // }, [currentToken, currentUser, dispatch, navigate]);
 
-  if (isVerifying) {
-    return <Loader />;
-  }
+  // if (isVerifying) {
+  //   return <Loader />;
+  // }
 
-  return (
-    <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route element={<AuthGuard isAuthenticated={isAuthenticated} loginPath={loginPath} />}>
-          <Route index element={<Navigate to="home" replace />} />
-          <Route path="home" element={<HomePage />} />
+  if (DISABLE_AUTH_CHECKS) {
+    return (
+      <Suspense fallback={<Loader />}>
+        <Routes>
+          {/* Main app layout */}
+          <Route path="/" element={<AppLayout />}>
+            {/* Default page */}
+            {/* <Route index element={<Navigate to="home" replace />} /> */}
 
-          {APP_ROUTES.map(({ path, element, resource, action }) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                <PermissionGuard
-                  resource={resource}
-                  action={action}
-                  forbiddenPath={forbiddenPath}
-                  element={element}
-                />
-              }
-            />
-          ))}
+            {/* Home page */}
+            <Route path="/" element={<HomePage />} />
 
-          <Route path="shops/*" element={<AppLayout />} />
+            {/* Dynamically load APP_ROUTES */}
+            {renderRoutes(APP_ROUTES)}
+
+            {/* You can nest children for users, roles, etc. */}
+          </Route>
+
+          {/* Shop routes can have their own layout */}
+          {/* <Route path="/shops/:shopId/*" element={<ShopLayout />}>
+            {SHOP_ROUTES.map(({ path, element }) => (
+              <Route key={path} path={path} element={<element />} />
+            ))}
+          </Route> */}
 
           <Route path="forbidden" element={<ForbiddenPage />} />
-
           <Route path="*" element={<NotFound />} />
-        </Route>
-      </Routes>
-    </Suspense>
-  );
+        </Routes>
+      </Suspense>
+    );
+  }
+
+  // Original auth-enabled code (commented out)
+  // return (
+  //   <Suspense fallback={<Loader />}>
+  //     <Routes>
+  //       <Route element={<AuthGuard isAuthenticated={isAuthenticated} loginPath={loginPath} />}>
+  //         <Route index element={<Navigate to="home" replace />} />
+  //         <Route path="home" element={<HomePage />} />
+
+  //         {APP_ROUTES.map(({ path, element, resource, action }) => (
+  //           <Route
+  //             key={path}
+  //             path={path}
+  //             element={
+  //               <PermissionGuard
+  //                 resource={resource}
+  //                 action={action}
+  //                 forbiddenPath={forbiddenPath}
+  //                 element={element}
+  //               />
+  //             }
+  //           />
+  //         ))}
+
+  //         <Route path="shops/*" element={<AppLayout />} />
+
+  //         <Route path="forbidden" element={<ForbiddenPage />} />
+
+  //         <Route path="*" element={<NotFound />} />
+  //       </Route>
+  //     </Routes>
+  //   </Suspense>
+  // );
 }

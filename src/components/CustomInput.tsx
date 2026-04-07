@@ -1,5 +1,6 @@
-import { TextField, InputAdornment, type TextFieldProps } from "@mui/material";
+import { TextField, InputAdornment, useTheme, type TextFieldProps } from "@mui/material";
 import { type ReactNode } from "react";
+import clsx from "clsx";
 
 export type InputSize = "small" | "medium";
 
@@ -15,7 +16,7 @@ export type InputType =
   | "time"
   | "datetime-local";
 
-export interface CustomInputProps extends Omit<TextFieldProps, "size" | "type"> {
+export interface CustomInputProps extends Omit<TextFieldProps, "size" | "type" | "helperText"> {
   label?: string;
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -23,13 +24,21 @@ export interface CustomInputProps extends Omit<TextFieldProps, "size" | "type"> 
   placeholder?: string;
   startIcon?: ReactNode;
   endIcon?: ReactNode;
-  helperText?: string;
-  error?: boolean;
+  hasError?: boolean;
+  errorText?: string;
+  fixedErrorSpace?: boolean;
   success?: boolean;
   disabled?: boolean;
   required?: boolean;
   fullWidth?: boolean;
   size?: InputSize;
+  containerClassName?: string;
+  inputClassName?: string;
+  fieldClassName?: string;
+  labelClassName?: string;
+  helperTextClassName?: string;
+  startIconClassName?: string;
+  endIconClassName?: string;
 }
 
 export default function CustomInput({
@@ -40,40 +49,80 @@ export default function CustomInput({
   placeholder,
   startIcon,
   endIcon,
-  helperText,
-  error = false,
+  hasError = false,
+  errorText = "",
+  fixedErrorSpace = false,
   success = false,
   disabled = false,
   required = false,
   fullWidth = true,
   size = "medium",
+  containerClassName,
+  inputClassName,
+  fieldClassName,
+  labelClassName,
+  helperTextClassName,
+  startIconClassName,
+  endIconClassName,
   ...rest
 }: CustomInputProps) {
-  return (
-    <TextField
-      label={label}
-      value={value}
-      onChange={onChange}
-      type={type}
-      placeholder={placeholder}
-      error={error}
-      disabled={disabled}
-      required={required}
-      helperText={helperText}
-      fullWidth={fullWidth}
-      size={size}
-      variant="outlined"
-      color={success ? "success" : error ? "error" : "primary"}
-      InputProps={{
-        startAdornment: startIcon ? (
-          <InputAdornment position="start">{startIcon}</InputAdornment>
-        ) : undefined,
+  const showError = hasError && errorText;
 
-        endAdornment: endIcon ? (
-          <InputAdornment position="end">{endIcon}</InputAdornment>
-        ) : undefined,
-      }}
-      {...rest}
-    />
+  return (
+    <div
+      className={clsx(
+        "flex flex-col rounded-lg bg-transparent",
+        fullWidth && "w-full",
+        containerClassName,
+        "bg-gray-50",
+      )}
+    >
+      <TextField
+        label={label}
+        value={value}
+        onChange={onChange}
+        type={type}
+        placeholder={placeholder}
+        error={hasError}
+        disabled={disabled}
+        required={required}
+        fullWidth={fullWidth}
+        size={size}
+        variant="outlined"
+        InputProps={{
+          className: clsx("transition-all rounded-lg", inputClassName),
+          startAdornment: startIcon ? (
+            <InputAdornment position="start">
+              <span className={clsx("flex items-center", startIconClassName)}>{startIcon}</span>
+            </InputAdornment>
+          ) : undefined,
+          endAdornment: endIcon ? (
+            <InputAdornment position="end">
+              <span className={clsx("flex items-center", endIconClassName)}>{endIcon}</span>
+            </InputAdornment>
+          ) : undefined,
+        }}
+        InputLabelProps={{
+          className: clsx("text-sm font-medium", labelClassName),
+        }}
+        inputProps={{
+          className: clsx("bg-transparent", fieldClassName),
+        }}
+        {...rest}
+      />
+
+      {/* Helper / Error */}
+      {(fixedErrorSpace || showError) && (
+        <span
+          className={clsx(
+            "ml-3 text-sm transition-all min-h-5 rounded px-1",
+            showError ? "opacity-100 bg-red text-red-700" : fixedErrorSpace ? "opacity-0" : "",
+            helperTextClassName,
+          )}
+        >
+          {errorText || " "}
+        </span>
+      )}
+    </div>
   );
 }

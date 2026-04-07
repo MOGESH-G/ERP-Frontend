@@ -7,6 +7,7 @@ import store from "./store";
 import App from "./App";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/react-query";
+import "./index.css";
 
 const rootElement = document.getElementById("root") as HTMLElement;
 
@@ -22,4 +23,3 @@ ReactDOM.createRoot(rootElement).render(
     </BrowserRouter>
   </React.StrictMode>,
 );
-

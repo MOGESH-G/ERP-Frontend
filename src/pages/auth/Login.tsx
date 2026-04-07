@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Box, Paper, Stack, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
 import { motion } from "motion/react";
 import GridBackground from "../../components/GridBackground";
 import { useLogin } from "../../hooks/auth";
@@ -15,7 +14,6 @@ const MotionBox = motion(Box);
 const MotionPaper = motion(Paper);
 
 export default function LoginPage() {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [phone, setPhone] = useState("");
@@ -43,7 +41,7 @@ export default function LoginPage() {
       {
         onSuccess: () => {
           message.success("Login successful");
-          navigate("/app/home");
+          navigate("/app");
         },
         onError: () => {
           console.error("Login error:", error);
@@ -51,6 +49,11 @@ export default function LoginPage() {
         },
       },
     );
+  };
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, ""); // remove non-digits
+    setPhone(value);
   };
 
   return (
@@ -69,7 +72,7 @@ export default function LoginPage() {
           flexDirection: "column",
           justifyContent: "center",
           px: 8,
-          borderRight: `1px solid ${theme.palette.custom.borderDefault}`,
+          borderRight: `1px solid var(--color-border-subtle)`,
           position: "relative",
           overflow: "hidden",
         }}
@@ -104,7 +107,7 @@ export default function LoginPage() {
             Enterprise Resource Planning
           </Typography>
 
-          <Typography variant="h1" sx={{ color: "text.primary" }}>
+          <Typography variant="h2" sx={{ color: "text.primary" }}>
             Every rupee.
             <br />
             <Box component="span" sx={{ fontStyle: "italic", color: "primary.main" }}>
@@ -145,20 +148,25 @@ export default function LoginPage() {
             width: "100%",
             maxWidth: 420,
             p: 4,
+            borderRadius: 2,
             bgcolor: "background.paper",
-            border: `1px solid ${theme.palette.custom.borderSubtle}`,
+            border: `1px solid var(--color-border-subtle)`,
           }}
         >
           <Stack
             component="form"
             onSubmit={(e) => {
               e.preventDefault();
+              if (phone.length < 10) {
+                message.error("Please enter valid phone number");
+                return;
+              }
               handleLogin();
             }}
             spacing={3}
           >
             <Box>
-              <Typography variant="h3">Sign In</Typography>
+              <Typography variant="h4">Sign In</Typography>
 
               <Typography variant="body2" sx={{ mt: 1 }}>
                 Enter your credentials to continue
@@ -167,9 +175,10 @@ export default function LoginPage() {
 
             <CustomInput
               label="Mobile Number"
+              type="tel"
               fullWidth
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneChange}
             />
 
             <CustomInput
@@ -187,19 +196,7 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
             />
 
-            <CustomButton
-              // variant="contained"
-              // size="large"
-              // sx={{
-              //   py: 1.5,
-              // }}
-              sx={{
-                py: 1.5,
-              }}
-              type="submit"
-              loading={isPending}
-              // loading={isPending}
-            >
+            <CustomButton className="py-3!" type="submit" loading={isPending}>
               {isPending ? "Signing in..." : "Sign In"}
             </CustomButton>
             <Typography
