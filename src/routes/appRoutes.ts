@@ -68,14 +68,14 @@ export const APP_ROUTES: AppRoute[] = [
 ];
 
 export const SHOP_ROUTES: AppRoute[] = [
-  // {
-  //   path: "list",
-  //   element: lazy(() => import("../pages/app/shops/List")),
-  //   resource: "shops",
-  //   action: "view",
-  //   label: "Shop List",
-  //   showInMenu: true,
-  // },
+  {
+    path: ":id",
+    element: lazy(() => import("../pages/shops/index")),
+    resource: "shops",
+    action: "view",
+    label: "Shop Home",
+    showInMenu: true,
+  },
   // {
   //   path: "create",
   //   element: lazy(() => import("../pages/app/shops/Create")),

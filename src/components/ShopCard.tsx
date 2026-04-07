@@ -6,7 +6,7 @@ const ShopCard = ({ shop }: { shop: Shops }) => {
 
   return (
     <div
-      onClick={() => navigate(`/shops/${shop.id}`)}
+      onClick={() => navigate(`shops/${shop.id}`)}
       className={`
         w-full max-w-xs
         h-full

@@ -10,7 +10,7 @@ import CustomInput from "../../../components/CustomInput";
 import { useNavigate } from "react-router-dom";
 // import Loader from "../../../components/Loader";
 
-const Profile: React.FC = () => {
+const Profile = () => {
   const navigate = useNavigate();
   const reduxUser = useSelector((state: RootState) => state.auth.user);
 

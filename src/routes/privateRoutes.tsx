@@ -13,6 +13,8 @@ import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import Loader from "../components/Loader";
 // import { usePermission } from "../hooks/usePermisson";
 import { APP_ROUTES, SHOP_ROUTES, type AppRoute } from "./appRoutes";
+import ShopLayout from "../components/layouts/ShopLayout";
+import AppLayout from "../components/layouts/AppLayout";
 // import { verifyUser } from "../api/auth";
 // import { loginSuccess, logoutSuccess } from "../slices/authSlice";
 // import type { RootState } from "../store";
@@ -46,9 +48,6 @@ interface PrivateRoutesProps {
 //   return { isAuthenticated: !!token, user: null };
 // }
 
-const AppLayout: React.ComponentType<{ children: ReactNode }> = lazy(
-  () => import("../components/layouts/AppLayout"),
-);
 const HomePage = lazy(() => import("../pages/app/Home"));
 
 const renderRoutes = (routes: AppRoute[]) => {
@@ -100,11 +99,12 @@ const NotFound = lazy(() => import("../pages/app/NotFound"));
 // Set to true to disable auth checks for development
 const DISABLE_AUTH_CHECKS = true;
 
-export default function PrivateRoutes({
-  isAuthenticated: isAuthProp,
-  loginPath = "/auth/login",
-  forbiddenPath = "/app/forbidden",
-}: PrivateRoutesProps): ReactNode {
+// export default function PrivateRoutes({
+//   isAuthenticated: isAuthProp,
+//   loginPath = "/auth/login",
+//   forbiddenPath = "/app/forbidden",
+// }: PrivateRoutesProps): ReactNode {
+export default function PrivateRoutes() {
   // Temporarily disabled for development without backend
   // const { isAuthenticated: isAuthFromHook } = useAuth();
   // const dispatch = useDispatch();
@@ -159,9 +159,6 @@ export default function PrivateRoutes({
         <Routes>
           {/* Main app layout */}
           <Route path="/" element={<AppLayout />}>
-            {/* Default page */}
-            {/* <Route index element={<Navigate to="home" replace />} /> */}
-
             {/* Home page */}
             <Route index element={<HomePage />} />
 
@@ -172,11 +169,9 @@ export default function PrivateRoutes({
           </Route>
 
           {/* Shop routes can have their own layout */}
-          {/* <Route path="/shops/:shopId/*" element={<ShopLayout />}>
-            {SHOP_ROUTES.map(({ path, element }) => (
-              <Route key={path} path={path} element={<element />} />
-            ))}
-          </Route> */}
+          <Route path="/shops/:shopId/*" element={<ShopLayout />}>
+            {renderRoutes(SHOP_ROUTES)}
+          </Route>
 
           <Route path="forbidden" element={<ForbiddenPage />} />
           <Route path="*" element={<NotFound />} />

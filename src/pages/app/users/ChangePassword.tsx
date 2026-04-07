@@ -13,7 +13,7 @@ interface ChangePasswordForm {
   confirmPassword: string;
 }
 
-const ChangePassword: React.FC = () => {
+const ChangePassword = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState<ChangePasswordForm>({
     currentPassword: "",

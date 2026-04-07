@@ -1,10 +1,13 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { type MRT_ColumnDef } from "material-react-table";
 import { Box, Chip, IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
+import { RiFileExcel2Line } from "react-icons/ri";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { CustomTable } from "../../../components/CustomTable";
+import CustomButton from "../../../components/CustomButton";
+import { FiUserPlus } from "react-icons/fi";
 
 interface User {
   id: string;
@@ -20,6 +23,7 @@ interface User {
 
 const Users = () => {
   const [params] = useSearchParams();
+  const navigate = useNavigate();
   console.log(Object.fromEntries(params.entries())); // better logging
 
   const users: User[] = [
@@ -208,19 +212,18 @@ const Users = () => {
         columns={columns}
         data={users}
         enableRowActions
+        bordered
         // state={{
         //   columnFilters, // controlled
         //   globalFilter, // controlled
         //   isLoading,
         // }}
-        enableRowSelection={false}
         enableColumnFilters
         enableGlobalFilter
-        manualFiltering
-        onGlobalFilterChange={(value) => console.log("Global Filter:", value)}
-        onColumnFiltersChange={(filters) =>
-          console.log("Column Filters:", filters())
-        }
+        // onGlobalFilterChange={(value) => console.log("Global Filter:", value)}
+        // onColumnFiltersChange={(filters) =>
+        //   console.log("Column Filters:", filters())
+        // }
         renderRowActions={({ row }) => (
           <Box sx={{ display: "flex", gap: "8px" }}>
             <Tooltip title="Edit">
@@ -243,7 +246,28 @@ const Users = () => {
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <p className="px-2 text-2xl font-semibold">Users</p>
+          <div className="flex-1 mt-1 flex items-center justify-between">
+            <p className="text-2xl font-semibold">Users</p>
+            <div className="flex justify-end gap-2">
+              <CustomButton
+                size="sm"
+                className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
+                onClick={() => navigate("/app/users/create-user")}
+                startIcon={<FiUserPlus />}
+              >
+                Add User
+              </CustomButton>
+              <CustomButton
+                size="sm"
+                color="green"
+                className="px-4 py-2 rounded bg-gray-200 hover:bg-gray-300 transition"
+                onClick={() => console.log("Export clicked")}
+                startIcon={<RiFileExcel2Line />}
+              >
+                Export
+              </CustomButton>
+            </div>
+          </div>
         )}
       />
     </div>
