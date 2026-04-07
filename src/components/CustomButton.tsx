@@ -36,16 +36,13 @@ const sizeClasses: Record<ButtonSize, string> = {
 
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    "bg-[var(--primary-500)] text-[var(--primary-contrast)] hover:bg-[var(--primary-600)] active:bg-[var(--primary-700)]",
+    "bg-primary-500 text-primary-contrast hover:bg-primary-600 active:bg-primary-700",
   secondary:
-    "bg-[var(--secondary-500)] text-[var(--secondary-contrast, var(--text-inverse))] hover:bg-[var(--secondary-700)]",
-  outline:
-    "border border-[var(--border-default)] text-[var(--text-body)] hover:bg-[var(--bg-subtle)]",
-  ghost: "text-[var(--text-body)] hover:bg-[var(--bg-subtle)]",
-  danger:
-    "bg-[var(--text-error)] text-white hover:bg-red-700 active:bg-red-800",
-  success:
-    "bg-[var(--text-success)] text-white hover:bg-green-700 active:bg-green-800",
+    "bg-secondary-500 text-secondary-contrast-text-inverse) hover:bg-secondary-700",
+  outline: "border border-default text-text-body hover:bg-bg-subtle",
+  ghost: "text-text-body hover:bg-bg-subtle",
+  danger: "bg-text-error text-white hover:bg-red-700 active:bg-red-800",
+  success: "bg-text-success text-white hover:bg-green-700 active:bg-green-800",
 };
 
 export type ContentAlign = "start" | "center" | "end";
