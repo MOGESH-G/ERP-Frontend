@@ -68,3 +68,17 @@ body {
 p {
   margin: 0;
 }
+
+@keyframes slide-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+.animate-slide-fade-in {
+  animation: slide-fade-in 0.2s ease-out forwards;
+}

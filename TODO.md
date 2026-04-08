@@ -1,20 +1,13 @@
-# Navigation Fix Plan - Home.tsx
+# Sidebar Enhancement Progress
 
-**Status: ✅ COMPLETED**
+**Previous Task:** Menu clicking fixed ✓
 
-## Steps:
+**New Task:** Collapsed sidebar improvements (submenus viable, hover tooltip/expand, custom themed tooltip).
 
-- [x] 1. Create TODO.md with plan breakdown
-- [x] 2. Read and analyze src/pages/app/Home.tsx (already done)
-- [x] 3. Fix all incorrect navigate() paths in Home.tsx
-  - `/profile` → `/app/profile`
-  - `/app/change-password` → `/app/profile/change-password`
-  - `users/create-user` → `user/create-user`
-  - `/shops/create` → commented out (route not defined)
-  - `/dashboard` → `/app/dashboard`
-- [x] 4. Used create_file to apply clean complete file with fixes (edits had JSX issues)
-- [x] 5. Created src/pages/app/Dashboard.tsx for /app/dashboard
-- [x] 6. Update TODO.md with completion
-- [x] 7. Ready for completion
+**Steps:**
 
-**Result:** All navigation buttons in Home.tsx now use correct paths matching routes. Direct URLs and programmatic navigate both work. Shops button commented since no route.
+- [x] Plan confirmed
+- [x] Create src/components/ui/Tooltip.tsx (custom, themed, sidebar-styled)
+- [x] Update ShopSidebar.tsx (hoveredItem state, Tooltip on parents/children, hover expand for collapsed submenus, animations)
+- [x] Test hover/expand in collapsed mode (working via dev server)
+- [x] Complete: Collapsed sidebar now shows tooltips + temporary expand/submenus on hover!
