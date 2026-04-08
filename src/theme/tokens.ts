@@ -18,6 +18,7 @@ export const tokens = {
     primary: {
       50: "#EFF6FF",
       100: "#DBEAFE",
+      300: "#93C5FD",
       500: "#2563EB",
       600: "#1D4ED8",
       700: "#1E40AF",
@@ -32,6 +33,7 @@ export const tokens = {
     },
 
     accent: {
+      100: "#EDE9FE",
       300: "#C4B5FD",
       500: "#8B5CF6",
       700: "#6D28D9",
@@ -86,6 +88,7 @@ export const tokens = {
     primary: {
       50: "#172554",
       100: "#1E3A8A",
+      300: "#60A5FA",
       500: "#3B82F6",
       600: "#2563EB",
       700: "#1D4ED8",
@@ -100,6 +103,7 @@ export const tokens = {
     },
 
     accent: {
+      100: "#EDE9FE",
       300: "#A78BFA",
       500: "#8B5CF6",
       700: "#7C3AED",

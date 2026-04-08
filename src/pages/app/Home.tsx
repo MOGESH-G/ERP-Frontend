@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CustomAccordion from "../../components/CustomAccordion";
 import type { Shops } from "../../types/shops";
 import ShopCard from "../../components/ShopCard";
-import { FiEye, FiLock, FiUser, FiUserPlus } from "react-icons/fi";
+import { FiLock, FiUserPlus, FiUsers } from "react-icons/fi";
+import DashboardCard from "../../components/DashboardCard";
+import { HiOutlineUserCircle } from "react-icons/hi";
 
 const Home = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -94,138 +95,61 @@ const Home = () => {
 
   return (
     <main className="flex-1 overflow-y-auto p-6">
-      <div className="max-w-5/6 mx-auto">
-        {/* Section */}
-        <section>
-          <h2 className="text-lg font-semibold text-text-header mb-4">
-            Quick Actions
-          </h2>
+      <div className="grid grid-cols-5 auto-rows-[140px] gap-4 h-full">
+        <div className="col-span-4 row-span-3 bg-bg-elevated rounded-xl p-4 flex flex-col border-2 border-primary-500">
+          <h2 className="text-md font-semibold mb-2">Shops</h2>
 
-          <div className="space-y-4">
-            {/* Shops */}
-            <CustomAccordion title="Shops" defaultExpanded>
-              <div className="flex flex-col gap-4">
-                <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full">
-                  {shops.map((shop) => (
-                    <li key={shop.id} className="w-full h-32">
-                      <ShopCard shop={shop} />
-                    </li>
-                  ))}
-                </ul>
-
-                {/* Shops create disabled - route not configured */}
-              </div>
-            </CustomAccordion>
-
-            {/* Profile */}
-            <CustomAccordion title="Profile">
-              <ul className="space-y-2">
-                <li>
-                  <button
-                    onClick={() => navigate("/app/profile")}
-                    className="
-                      w-full text-left px-4 py-2 rounded-lg
-                      flex gap-2 items-center
-                      bg-bg-elevated
-                      hover:bg-bg-subtle
-                      transition-all duration-200
-                    "
-                  >
-                    <FiUser />
-                    View Profile Details
-                  </button>
+          <div className="flex-1 overflow-y-auto">
+            <ul className="grid grid-cols-2 md:grid-cols-3 pt-2 lg:grid-cols-4 gap-4">
+              {shops.map((shop, index) => (
+                <li key={`${shop.id}-${index}`} className="h-28">
+                  <ShopCard shop={shop} />
                 </li>
-
-                <li>
-                  <button
-                    onClick={() => navigate("/app/profile/change-password")}
-                    className="
-                      w-full text-left px-4 py-2 rounded-lg
-                      flex gap-2 items-center
-                      bg-bg-elevated
-                      hover:bg-bg-subtle
-                      transition-all duration-200
-                    "
-                  >
-                    <FiLock />
-                    Change Password
-                  </button>
-                </li>
-              </ul>
-            </CustomAccordion>
-
-            {/* Users */}
-            <CustomAccordion title="Users">
-              <ul className="space-y-2">
-                <li>
-                  <button
-                    onClick={() => navigate("/app/users")}
-                    className="
-                      w-full text-left px-4 py-2 rounded-lg
-                      flex gap-2 items-center
-                      bg-bg-elevated
-                      hover:bg-bg-subtle
-                      transition-all duration-200
-                    "
-                  >
-                    <FiEye />
-                    View all users
-                  </button>
-                </li>
-
-                <li>
-                  <button
-                    onClick={() => navigate("users/create-user")}
-                    className="
-                      w-full text-left px-4 py-2 rounded-lg
-                      flex gap-2 items-center
-                      bg-bg-elevated
-                      hover:bg-bg-subtle
-                      transition-all duration-200
-                    "
-                  >
-                    <FiUserPlus />
-                    Create User
-                  </button>
-                </li>
-              </ul>
-            </CustomAccordion>
-
-            {/* Other */}
-            <CustomAccordion title="Other">
-              <ul className="space-y-2">
-                <li>
-                  <button
-                    onClick={() => navigate("/app/dashboard")}
-                    className="
-                      w-full text-left px-4 py-2 rounded-lg
-                      bg-bg-elevated
-                      hover:bg-bg-subtle
-                      transition-all duration-200
-                    "
-                  >
-                    Dashboard
-                  </button>
-                </li>
-
-                <li>
-                  <button
-                    onClick={() => navigate("/app/forbidden")}
-                    className="
-                      w-full text-left px-4 py-2 rounded-lg
-                      bg-bg-elevated
-                      hover:bg-bg-subtle
-                      text-text-warning
-                      transition-all duration-200
-                    "
-                  >
-                    Permission Test
-                  </button>
-                </li>
-              </ul>
-            </CustomAccordion>
+              ))}
+            </ul>
           </div>
-        </section>
+        </div>
+
+        {/* 🟩 Profile */}
+        <DashboardCard
+          icon={<HiOutlineUserCircle size={28} />}
+          label="Profile"
+          onClick={() => navigate("/app/profile")}
+        />
+
+        {/* 🟩 Password */}
+        <DashboardCard
+          icon={<FiLock size={28} />}
+          label="Password"
+          onClick={() => navigate("/app/profile/change-password")}
+        />
+
+        {/* 🟩 Users */}
+        <DashboardCard
+          icon={<FiUsers size={28} />}
+          label="Users"
+          onClick={() => navigate("/app/users")}
+        />
+
+        {/* 🟩 Create User (permission-based) */}
+        <DashboardCard
+          icon={<FiUserPlus size={28} />}
+          label="Create"
+          onClick={() => navigate("users/create-user")}
+        />
+
+        {/* 🟩 Dashboard */}
+        <DashboardCard
+          label="Dashboard"
+          onClick={() => navigate("/app/dashboard")}
+        />
+
+        {/* 🟩 Permission Test */}
+        <DashboardCard
+          label="Test"
+          onClick={() => navigate("/app/forbidden")}
+          warning
+        />
       </div>
     </main>
   );

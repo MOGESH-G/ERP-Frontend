@@ -69,8 +69,8 @@ export const APP_ROUTES: AppRoute[] = [
 
 export const SHOP_ROUTES: AppRoute[] = [
   {
-    path: ":id",
-    element: lazy(() => import("../pages/shops/index")),
+    path: "",
+    element: lazy(() => import("../pages/shops/Dashboard")),
     resource: "shops",
     action: "view",
     label: "Shop Home",
@@ -102,7 +102,7 @@ export const SHOP_ROUTES: AppRoute[] = [
   },
   {
     path: ":id",
-    element: lazy(() => import("../pages/shops/index")),
+    element: lazy(() => import("../pages/shops/Dashboard")),
     resource: "shops",
     action: "view",
     label: "Shop Home",

@@ -3,6 +3,7 @@ import { logoutSuccess } from "../../slices/authSlice";
 import { useTheme } from "../../hooks/useTheme";
 import CustomButton from "../CustomButton";
 import { useNavigate } from "react-router-dom";
+import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 const AppHeader = () => {
   const dispatch = useDispatch();
@@ -32,19 +33,13 @@ const AppHeader = () => {
       </h1>
 
       <div className="flex items-center gap-3">
-        {/* Theme Toggle */}
-        <button
-          onClick={toggle}
-          className="
-            px-4 py-2 rounded-lg text-sm font-medium
-            bg-primary-500 text-white
-            transition-all duration-200
-            hover:bg-primary-700
-            active:scale-[0.97]
-          "
-        >
-          {mode === "dark" ? "Light" : "Dark"} Mode
-        </button>
+        <span onClick={toggle}>
+          {mode === "dark" ? (
+            <MdOutlineLightMode size={24} color="yellow" />
+          ) : (
+            <MdDarkMode size={24} color="black" />
+          )}
+        </span>
 
         {/* Logout */}
         <CustomButton onClick={handleLogout} variant="outline" color="red">

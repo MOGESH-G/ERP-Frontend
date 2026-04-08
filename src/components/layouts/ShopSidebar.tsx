@@ -10,6 +10,8 @@ const ShopSidebar = () => {
   const menuItems = getMenuItems(shopId!);
   const location = useLocation();
 
+  let timeoutId: ReturnType<typeof setTimeout>;
+
   const [collapsed, setCollapsed] = useState(false);
   const [hoveredMenu, setHoveredMenu] = useState<string | null>(null);
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
@@ -40,16 +42,27 @@ const ShopSidebar = () => {
   const isLeafActive = (label: string) =>
     activeMenuPath[activeMenuPath.length - 1] === label;
 
+  const handleMouseEnter = (label: string) => {
+    clearTimeout(timeoutId);
+    setHoveredMenu(label);
+  };
+
+  const handleMouseLeave = () => {
+    timeoutId = setTimeout(() => {
+      setHoveredMenu(null);
+    }, 150); // adjust delay
+  };
+
   return (
     <aside
       className={clsx(
-        "relative flex flex-col transition-all duration-300 bg-primary-500 text-white",
+        "flex flex-col transition-all duration-300 bg-primary-500 text-white",
         collapsed ? "w-16" : "w-64",
       )}
-      style={{ borderBottomRightRadius: "20px" }}
+      style={{ borderBottomRightRadius: "25px" }}
     >
       {/* Header */}
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4 h-16">
         {!collapsed && (
           <div>
             <h1 className="font-bold text-lg">My ERP</h1>
@@ -64,7 +77,15 @@ const ShopSidebar = () => {
         </span>
       </div>
       {/* Menu */}
-      <nav className="flex-1 mt-4 space-y-1 px-2">
+      <nav className="relative flex-1 space-y-1 px-2">
+        <div className="absolute -right-6 top-0 w-6 h-6 overflow-hidden bg-primary-500">
+          <div
+            className="absolute bottom-0 right-0 w-full h-full bg-bg-subtle"
+            style={{
+              borderTopLeftRadius: "100%",
+            }}
+          />
+        </div>
         {menuItems.map((item) => {
           const hasChildren = !!item.children?.length;
           const activeParent = isMenuActive(item.label); // Highlight parent if child active
@@ -91,11 +112,9 @@ const ShopSidebar = () => {
           return (
             <div
               key={item.label}
-              className="relative"
-              onMouseEnter={() => collapsed && setHoveredMenu(item.label)}
-              onMouseLeave={() =>
-                setTimeout(() => collapsed && setHoveredMenu(null), 500)
-              }
+              className="relative group"
+              onMouseEnter={() => collapsed && handleMouseEnter(item.label)}
+              onMouseLeave={() => collapsed && handleMouseLeave()}
             >
               <div
                 className={clsx(
