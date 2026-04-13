@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Select,
   MenuItem,
   InputLabel,
   FormControl,
-  FormHelperText,
   InputAdornment,
   type SelectProps,
 } from "@mui/material";
@@ -19,7 +19,7 @@ export interface CustomSelectProps extends Omit<
   label?: string;
   labelInside?: boolean; // floating label inside the select
   value?: string | number | (string | number)[];
-  onChange?: (e: React.ChangeEvent<{ value: unknown }>) => void;
+  onChange: (value: any) => void;
   options?: { label: string; value: string | number }[];
   multiple?: boolean;
   startIcon?: ReactNode;
@@ -87,7 +87,7 @@ export default function CustomSelect({
         <Select
           multiple={multiple}
           value={value}
-          onChange={onChange}
+          onChange={(val) => onChange(val)}
           labelId={!labelInside ? "custom-select-label" : undefined}
           // label={label ? label : undefined}
           displayEmpty

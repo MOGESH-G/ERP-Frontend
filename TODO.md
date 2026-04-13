@@ -1,13 +1,41 @@
-# Sidebar Enhancement Progress
+# Billing Page Implementation Plan
 
-**Previous Task:** Menu clicking fixed ✓
+## Status: In Progress
 
-**New Task:** Collapsed sidebar improvements (submenus viable, hover tooltip/expand, custom themed tooltip).
+### [ ] 1. Enhance Pos.tsx with complete 3-column billing layout
 
-**Steps:**
+- Left: Customer + Product selection
+- Center: Bill items table
+- Right: Payment + Totals
 
-- [x] Plan confirmed
-- [x] Create src/components/ui/Tooltip.tsx (custom, themed, sidebar-styled)
-- [x] Update ShopSidebar.tsx (hoveredItem state, Tooltip on parents/children, hover expand for collapsed submenus, animations)
-- [x] Test hover/expand in collapsed mode (working via dev server)
-- [x] Complete: Collapsed sidebar now shows tooltips + temporary expand/submenus on hover!
+### [ ] 2. Implement state management
+
+- billProducts array
+- selectedCustomer
+- paymentInfo
+- totals calculations
+
+### [ ] 3. Add calculations
+
+- Subtotal, tax, discount, roundoff, grandTotal
+
+### [ ] 4. UI Components
+
+- CustomTable for products/bill
+- CustomSelect for customer/payment
+- CustomInput for amounts
+
+### [ ] 5. Features
+
+- Auto-calculations
+- Customer/product search
+- Save bill
+- Print receipt
+
+### [ ] 6. Testing
+
+- Run dev server
+- Test UI interactions
+- Verify calculations
+
+**Next Step**: Implement step 1 - Full Pos.tsx enhancement

@@ -23,6 +23,7 @@ interface CustomTableProps<T extends MRT_RowData> {
   enableDensityToggle?: boolean;
   renderRowActions?: (props: any) => React.ReactNode;
   renderDetailPanel?: (props: any) => React.ReactNode;
+  renderEmptyRowsFallback?: () => React.ReactNode;
   renderTopToolbarCustomActions?: () => React.ReactNode;
 }
 
@@ -44,6 +45,7 @@ export function CustomTable<T extends MRT_RowData>({
   renderRowActions,
   renderDetailPanel,
   renderTopToolbarCustomActions,
+  renderEmptyRowsFallback,
   ...tableProps
 }: CustomTableProps<T>) {
   const borderColor = "var(--color-bg-elevated)";
@@ -68,28 +70,29 @@ export function CustomTable<T extends MRT_RowData>({
       muiTablePaperProps={{
         sx: () => ({
           borderRadius: 4,
-          backgroundColor: "var(--color-bg-base) ",
+          backgroundColor: "transparent !important",
           border: bordered ? `1px solid ${borderColor}` : "none",
         }),
       }}
       muiTableContainerProps={{
-        sx: {
-          backgroundColor: "var(--color-bg-subtle)",
-        },
+        sx: () => ({
+          backgroundColor: "var(--color-bg-elevated) !important",
+        }),
       }}
       // Header cells styling
       muiTableHeadCellProps={{
         sx: {
           fontWeight: "bold",
-          borderBottom: bordered ? `1px solid ${borderColor}` : "none",
           borderRight: bordered ? `1px solid ${borderColor}` : "none",
           borderTop: bordered ? `1px solid ${borderColor}` : "none",
+          borderBottom: "1px solid var(--color-border-subtle) !important",
         },
       }}
       // Body rows styling
       muiTableBodyProps={{
         sx: {
           "& .MuiTableRow-root": {
+            backgroundColor: "var(--color-bg-elevated) !important",
             borderBottom: bordered ? `1px solid ${borderColor}` : "none",
           },
         },
@@ -100,11 +103,28 @@ export function CustomTable<T extends MRT_RowData>({
           borderRight: bordered ? `1px solid ${borderColor}` : "none",
         },
       }}
+      muiTableHeadRowProps={{
+        sx: {
+          backgroundColor: "var(--color-bg-elevated) !important",
+        },
+      }}
+      muiBottomToolbarProps={{
+        sx: {
+          backgroundColor: "var(--color-bg-elevated) !important",
+        },
+      }}
+      muiTopToolbarProps={{
+        sx: {
+          backgroundColor: "var(--color-bg-elevated) !important",
+          borderBottom: "1px solid var(--color-border-subtle)",
+        },
+      }}
       // Initial State
       initialState={{
         pagination: { pageSize: 10, pageIndex: 0 },
-        showColumnFilters: true,
+        showColumnFilters: false,
       }}
+      renderEmptyRowsFallback={renderEmptyRowsFallback}
       renderRowActions={renderRowActions}
       renderDetailPanel={renderDetailPanel}
       renderTopToolbarCustomActions={renderTopToolbarCustomActions}

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { logoutSuccess } from "../../slices/authSlice";
-import { useTheme } from "../../hooks/useTheme";
-import CustomButton from "../CustomButton";
+import { logoutSuccess } from "../../../slices/authSlice";
+import { useTheme } from "../../../hooks/useTheme";
+import CustomButton from "../../custom/CustomButton";
 import { useNavigate } from "react-router-dom";
 import { MdDarkMode, MdOutlineLightMode } from "react-icons/md";
 

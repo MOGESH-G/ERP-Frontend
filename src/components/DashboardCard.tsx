@@ -21,7 +21,7 @@ const DashboardCard = ({
       className={clsx(
         "rounded-xl flex flex-col items-center justify-center gap-2",
         "bg-bg-elevated hover:shadow-lg transition-all duration-200",
-        "text-sm font-medium",
+        "text-sm font-medium border border-primary-500 cursor-pointer",
         warning && "text-text-warning",
         !visible && "invisible pointer-events-none",
       )}

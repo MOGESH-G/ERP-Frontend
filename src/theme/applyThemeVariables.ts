@@ -24,6 +24,7 @@ export const applyThemeVariables = (mode: "light" | "dark") => {
   // ================= PRIMARY (Blue) =================
   set("--primary-50", t.primary[50]);
   set("--primary-100", t.primary[100]);
+  set("--primary-300", t.primary[300]);
   set("--primary-500", t.primary[500]);
   set("--primary-600", t.primary[600]);
   set("--primary-700", t.primary[700]);

@@ -1,4 +1,4 @@
-import { TextField, InputAdornment, useTheme, type TextFieldProps } from "@mui/material";
+import { TextField, InputAdornment, type TextFieldProps } from "@mui/material";
 import { type ReactNode } from "react";
 import clsx from "clsx";
 
@@ -16,7 +16,10 @@ export type InputType =
   | "time"
   | "datetime-local";
 
-export interface CustomInputProps extends Omit<TextFieldProps, "size" | "type" | "helperText"> {
+export interface CustomInputProps extends Omit<
+  TextFieldProps,
+  "size" | "type" | "helperText"
+> {
   label?: string;
   value?: string | number;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -93,12 +96,16 @@ export default function CustomInput({
           className: clsx("transition-all rounded-lg", inputClassName),
           startAdornment: startIcon ? (
             <InputAdornment position="start">
-              <span className={clsx("flex items-center", startIconClassName)}>{startIcon}</span>
+              <span className={clsx("flex items-center", startIconClassName)}>
+                {startIcon}
+              </span>
             </InputAdornment>
           ) : undefined,
           endAdornment: endIcon ? (
             <InputAdornment position="end">
-              <span className={clsx("flex items-center", endIconClassName)}>{endIcon}</span>
+              <span className={clsx("flex items-center", endIconClassName)}>
+                {endIcon}
+              </span>
             </InputAdornment>
           ) : undefined,
         }}
@@ -116,7 +123,11 @@ export default function CustomInput({
         <span
           className={clsx(
             "ml-2 text-sm transition-all min-h-5 rounded px-1",
-            showError ? "opacity-100 bg-red text-red-700" : fixedErrorSpace ? "opacity-0" : "",
+            showError
+              ? "opacity-100 bg-red text-red-700"
+              : fixedErrorSpace
+                ? "opacity-0"
+                : "",
             helperTextClassName,
           )}
         >

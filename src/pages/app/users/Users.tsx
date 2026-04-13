@@ -5,8 +5,8 @@ import { Box, Chip, IconButton, Tooltip } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import { RiFileExcel2Line } from "react-icons/ri";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { CustomTable } from "../../../components/CustomTable";
-import CustomButton from "../../../components/CustomButton";
+import { CustomTable } from "../../../components/custom/CustomTable";
+import CustomButton from "../../../components/custom/CustomButton";
 import { FiUserPlus } from "react-icons/fi";
 
 interface User {
@@ -94,9 +94,9 @@ const Users = () => {
     },
     {
       id: "6",
-      name: "Divya Nair",
+      name: "Boxya Nair",
       phone: "7777777777",
-      email: "divya.nair@example.com",
+      email: "Boxya.nair@example.com",
       roles: ["staff"],
       permissions: {
         users: { view: true, create: false, edit: false, delete: false },
@@ -169,7 +169,7 @@ const Users = () => {
         accessorKey: "roles",
         header: "Roles",
         Cell: ({ cell }) => (
-          <Box sx={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+          <Box className="flex gap-3 flex-wrap">
             {cell.getValue<string[]>().map((role) => (
               <Chip
                 key={role}
@@ -192,7 +192,7 @@ const Users = () => {
         accessorKey: "shop_ids",
         header: "Shops",
         Cell: ({ cell }) => (
-          <Box sx={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
+          <Box className="flex gap-2 flex-wrap">
             {cell.getValue<string[]>().map((shop) => (
               <Chip key={shop} label={shop} size="small" />
             ))}
@@ -207,7 +207,7 @@ const Users = () => {
   );
 
   return (
-    <div className="p-4">
+    <Box className="p-4">
       <CustomTable<User>
         columns={columns}
         data={users}
@@ -225,7 +225,7 @@ const Users = () => {
         //   console.log("Column Filters:", filters())
         // }
         renderRowActions={({ row }) => (
-          <Box sx={{ display: "flex", gap: "8px" }}>
+          <Box className="flex gap-3">
             <Tooltip title="Edit">
               <IconButton
                 color="primary"
@@ -246,9 +246,9 @@ const Users = () => {
           </Box>
         )}
         renderTopToolbarCustomActions={() => (
-          <div className="flex-1 mt-1 flex items-center justify-between">
+          <Box className="flex-1 mt-1 flex items-center justify-between">
             <p className="text-2xl font-semibold">Users</p>
-            <div className="flex justify-end gap-2">
+            <Box className="flex justify-end gap-2">
               <CustomButton
                 size="sm"
                 className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
@@ -266,11 +266,11 @@ const Users = () => {
               >
                 Export
               </CustomButton>
-            </div>
-          </div>
+            </Box>
+          </Box>
         )}
       />
-    </div>
+    </Box>
   );
 };
 

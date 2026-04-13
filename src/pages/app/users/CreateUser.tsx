@@ -1,7 +1,8 @@
 import { useState } from "react";
-import CustomInput from "../../../components/CustomInput";
-import CustomButton from "../../../components/CustomButton";
-import CustomSelect from "../../../components/CustomSelect";
+import CustomInput from "../../../components/custom/CustomInput";
+import CustomButton from "../../../components/custom/CustomButton";
+import CustomSelect from "../../../components/custom/CustomSelect";
+import { Box } from "@mui/material";
 
 interface CreateUserForm {
   name: string;
@@ -56,7 +57,7 @@ const CreateUser = () => {
   };
 
   return (
-    <div className="w-full my-2 p-6 bg-white rounded-lg shadow-md">
+    <Box className="w-full my-2 p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-6">Create User</h2>
       <form
         className="grid md:grid-cols-2 gap-2 gap-y-4"
@@ -85,9 +86,9 @@ const CreateUser = () => {
           errorText={errors.phone}
           fixedErrorSpace
         />
-        {/* <div>
+        {/* <Box>
           <label className="block font-medium mb-1">Roles</label>
-          <div className="flex gap-4">
+          <Box className="flex gap-4">
             {roleOptions.map((role) => (
               <label key={role} className="flex items-center gap-1">
                 <input
@@ -104,11 +105,11 @@ const CreateUser = () => {
                 {role}
               </label>
             ))}
-          </div>
+          </Box>
           {errors.roles && (
             <p className="text-red-500 text-sm">{errors.roles}</p>
           )}
-        </div> */}
+        </Box> */}
         <CustomSelect
           value={form.roles}
           multiple
@@ -141,7 +142,7 @@ const CreateUser = () => {
 
         <CustomButton type="submit">Create User</CustomButton>
       </form>
-    </div>
+    </Box>
   );
 };
 

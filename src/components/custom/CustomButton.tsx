@@ -38,9 +38,9 @@ const variantClasses: Record<ButtonVariant, string> = {
   primary:
     "bg-primary-500 text-primary-contrast hover:bg-primary-600 active:bg-primary-700",
   secondary:
-    "bg-secondary-500 text-secondary-contrast-text-inverse) hover:bg-secondary-700",
-  outline: "border border-default text-text-body hover:bg-bg-subtle",
-  ghost: "text-text-body hover:bg-bg-subtle",
+    "bg-secondary-500 text-secondary-contrast-text-inverse hover:bg-secondary-700",
+  outline: "border border-default text-text-body",
+  ghost: "text-text-body hover:bg-action-hover",
   danger: "bg-text-error text-white hover:bg-red-700 active:bg-red-800",
   success: "bg-text-success text-white hover:bg-green-700 active:bg-green-800",
 };

@@ -1,13 +1,12 @@
-import React from "react";
-
 import { useSelector } from "react-redux";
 // import { useQuery } from "@tanstack/react-query";
 import type { RootState } from "../../../store";
 import type { User } from "../../../types/user";
 // import { verifyUser } from "../../../api/auth";
-import CustomButton from "../../../components/CustomButton";
-import CustomInput from "../../../components/CustomInput";
+import CustomButton from "../../../components/custom/CustomButton";
+import CustomInput from "../../../components/custom/CustomInput";
 import { useNavigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
 // import Loader from "../../../components/Loader";
 
 const Profile = () => {
@@ -25,8 +24,8 @@ const Profile = () => {
     name: "Gene Rodriguez",
     phone: "+91 98234 89243",
     email: "gene.rodriguez@example.com",
-    shop_ids: ["shop_001", "shop_002"],
-    aadhar_number: "1234 5678 9012",
+    shopIds: ["shop_001", "shop_002"],
+    aadharNumber: "1234 5678 9012",
     address: "1234 Maple Street, Sector 7, New Delhi, India",
   };
   // Fetch current user if not in Redux
@@ -50,33 +49,33 @@ const Profile = () => {
   };
 
   return (
-    <div className="w-full mx-auto space-y-4 mb-4 flex flex-col">
-      <div className=" flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold text-text-header">
+    <Box className="w-full mx-auto space-y-4 mb-4 flex flex-col">
+      <Box className=" flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <Box>
+          <Typography variant="h1" className="font-semibold text-text-header">
             Account details
-          </h1>
-        </div>
-      </div>
+          </Typography>
+        </Box>
+      </Box>
 
       <section className="rounded-md bg-bg-paper p-4 shadow-md">
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+        <Box className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Box>
             <h2 className="text-xl font-semibold text-text-header">
               Profile Information
             </h2>
             <p className="text-sm text-text-body mt-1">
               Your current account details.
             </p>
-          </div>
-          <div className="flex flex-wrap gap-2">
+          </Box>
+          <Box className="flex flex-wrap gap-2">
             <CustomButton variant="primary" onClick={handleEditProfile}>
               Edit
             </CustomButton>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <Box className="grid gap-4 md:grid-cols-2">
           <CustomInput
             label="Username"
             value={displayName}
@@ -84,29 +83,29 @@ const Profile = () => {
             fullWidth
           />
           <CustomInput label="Role" value={roleLabel} disabled fullWidth />
-        </div>
+        </Box>
 
-        <div className="grid gap-4 md:grid-cols-2 mt-4">
+        <Box className="grid gap-4 md:grid-cols-2 mt-4">
           <CustomInput label="Email" value={user.email} disabled fullWidth />
           <CustomInput label="Phone" value={user.phone} disabled fullWidth />
-        </div>
+        </Box>
 
-        <div className="grid gap-4 md:grid-cols-2 mt-4">
+        <Box className="grid gap-4 md:grid-cols-2 mt-4">
           <CustomInput
             label="Aadhar Number"
-            value={user.aadhar_number}
+            value={user.aadharNumber}
             disabled
             fullWidth
           />
           <CustomInput
             label="Linked Shops"
-            value={user.shop_ids.join(", ")}
+            value={user.shopIds.join(", ")}
             disabled
             fullWidth
           />
-        </div>
+        </Box>
 
-        <div className="grid gap-4 mt-4">
+        <Box className="grid gap-4 mt-4">
           <CustomInput
             label="Address"
             value={user.address}
@@ -115,25 +114,25 @@ const Profile = () => {
             multiline
             rows={3}
           />
-        </div>
+        </Box>
       </section>
 
       <section className="rounded-md bg-bg-paper p-4 shadow-md">
-        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
+        <Box className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <Box>
             <h2 className="text-xl font-semibold text-text-header">
               Password & Security
             </h2>
             <p className="text-sm text-text-body mt-1">
               Your current password and security settings.
             </p>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
-        <div className="grid gap-4 md:grid-cols-2">
+        <Box className="grid gap-4 md:grid-cols-2">
           <CustomInput label="Password" value="********" disabled fullWidth />
-        </div>
-        <div className="flex justify-end mt-4">
+        </Box>
+        <Box className="flex justify-end mt-4">
           <CustomButton
             variant="primary"
             className="w-fit"
@@ -141,9 +140,9 @@ const Profile = () => {
           >
             Change Password
           </CustomButton>
-        </div>
+        </Box>
       </section>
-    </div>
+    </Box>
   );
 };
 

@@ -1,8 +1,10 @@
 export interface Shops {
   id: string;
   name: string;
-  shop_code: string;
+  shopCode: string;
   address: string;
   phone: string;
-  gst_number: string;
+  gstNumber: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

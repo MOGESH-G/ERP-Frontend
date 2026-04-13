@@ -5,6 +5,7 @@ import ShopCard from "../../components/ShopCard";
 import { FiLock, FiUserPlus, FiUsers } from "react-icons/fi";
 import DashboardCard from "../../components/DashboardCard";
 import { HiOutlineUserCircle } from "react-icons/hi";
+import { Box } from "@mui/material";
 
 const Home = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -95,20 +96,20 @@ const Home = () => {
 
   return (
     <main className="flex-1 overflow-y-auto p-6">
-      <div className="grid grid-cols-5 auto-rows-[140px] gap-4 h-full">
-        <div className="col-span-4 row-span-3 bg-bg-elevated rounded-xl p-4 flex flex-col border-2 border-primary-500">
-          <h2 className="text-md font-semibold mb-2">Shops</h2>
+      <Box className="grid grid-cols-1 lg:grid-cols-5 auto-rows-[140px] gap-4">
+        <Box className="lg:col-span-4 row-span-3 bg-bg-elevated rounded-xl p-4 flex flex-col border-2 border-primary-500">
+          <h2 className="text-md font-semibold mb-3">Shops</h2>
 
-          <div className="flex-1 overflow-y-auto">
-            <ul className="grid grid-cols-2 md:grid-cols-3 pt-2 lg:grid-cols-4 gap-4">
-              {shops.map((shop, index) => (
-                <li key={`${shop.id}-${index}`} className="h-28">
+          <Box className="flex-1 overflow-y-auto pr-1">
+            <ul className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] auto-rows-[120px] pr-2 py-2 gap-4">
+              {shops.map((shop) => (
+                <li key={shop.id}>
                   <ShopCard shop={shop} />
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
+          </Box>
+        </Box>
 
         {/* 🟩 Profile */}
         <DashboardCard
@@ -150,7 +151,7 @@ const Home = () => {
           onClick={() => navigate("/app/forbidden")}
           warning
         />
-      </div>
+      </Box>
     </main>
   );
 };

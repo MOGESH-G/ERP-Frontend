@@ -3,8 +3,8 @@ import { Box, Paper, Stack, Typography } from "@mui/material";
 import { motion } from "motion/react";
 import GridBackground from "../../components/GridBackground";
 import { useLogin } from "../../hooks/auth";
-import CustomButton from "../../components/CustomButton";
-import CustomInput from "../../components/CustomInput";
+import CustomButton from "../../components/custom/CustomButton";
+import CustomInput from "../../components/custom/CustomInput";
 import { useNavigate } from "react-router-dom";
 import { message } from "../../lib/message";
 import { validatePhone, validatePassword } from "../../utils/validation";
@@ -57,33 +57,15 @@ export default function LoginPage() {
   };
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        display: "flex",
-        bgcolor: "background.default",
-      }}
-    >
+    <Box className="min-h-screen flex bg-bg-subtle">
       {/* LEFT PANEL */}
-      <Box
-        sx={{
-          flex: 1,
-          display: { xs: "none", md: "flex" },
-          flexDirection: "column",
-          justifyContent: "center",
-          px: 8,
-          borderRight: `1px solid var(--color-border-subtle)`,
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
+      <Box className="flex-1 md:flex flex-col justify-center px-2 border-r border-r-border-elevated relative overflow-hidden">
         <GridBackground />
 
         {/* vignette overlay */}
         <Box
-          sx={{
-            position: "absolute",
-            inset: 0,
+          className="absolute inset-0"
+          style={{
             background:
               "radial-gradient(circle at 30% 40%, rgba(217,155,50,0.06), transparent 60%)",
           }}
@@ -94,64 +76,41 @@ export default function LoginPage() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          sx={{ position: "relative", zIndex: 1 }}
+          className="relative z-10"
         >
           <Typography
             variant="overline"
-            sx={{
-              color: "primary.main",
-              letterSpacing: "0.2em",
-              mb: 2,
-            }}
+            className="text-primary-500 leading-1 mb-2"
           >
             Enterprise Resource Planning
           </Typography>
 
-          <Typography variant="h2" sx={{ color: "text.primary" }}>
+          <Typography variant="h2" className="text-bg-inverse">
             Every rupee.
             <br />
-            <Box component="span" sx={{ fontStyle: "italic", color: "primary.main" }}>
+            <Box component="span" className="italic text-primary-500">
               Accounted for.
             </Box>
           </Typography>
 
           <Typography
             variant="body1"
-            sx={{
-              mt: 3,
-              maxWidth: 420,
-              color: "text.secondary",
-            }}
+            className="mt-0.5 max-w-105 text-secondary-500"
           >
-            Unified POS, inventory, GST compliance and accounting built specifically for Indian
-            retail businesses.
+            Unified POS, inventory, GST compliance and accounting built
+            specifically for Indian retail businesses.
           </Typography>
         </MotionBox>
       </Box>
 
       {/* RIGHT PANEL */}
-      <Box
-        sx={{
-          flex: 1,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          px: 3,
-        }}
-      >
+      <Box className="flex-1 flex items-center justify-center px-1">
         <MotionPaper
           elevation={4}
           initial={{ opacity: 0, scale: 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
-          sx={{
-            width: "100%",
-            maxWidth: 420,
-            p: 4,
-            borderRadius: 2,
-            bgcolor: "background.paper",
-            border: `1px solid var(--color-border-subtle)`,
-          }}
+          className="w-full max-w-105 p-8 rounded-lg! bg-bg-paper border border-bg-subtle"
         >
           <Stack
             component="form"
@@ -201,10 +160,7 @@ export default function LoginPage() {
             </CustomButton>
             <Typography
               variant="caption"
-              sx={{
-                textAlign: "center",
-                color: "text.disabled",
-              }}
+              className="text-center text-secondary-500"
             >
               RetailOS ERP · © 2026
             </Typography>

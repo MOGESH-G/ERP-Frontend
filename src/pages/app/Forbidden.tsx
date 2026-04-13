@@ -1,11 +1,13 @@
+import { Box } from "@mui/material";
+
 const Forbidden = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg-base px-4">
-      <div className="bg-bg-paper border border-border-subtle rounded-2xl p-8 max-w-md w-full text-center shadow-sm">
+    <Box className="min-h-screen flex items-center justify-center bg-bg-base px-4">
+      <Box className="bg-bg-paper border border-border-subtle rounded-2xl p-8 max-w-md w-full text-center shadow-sm">
         {/* Icon */}
-        <div className="mx-auto mb-4 w-16 h-16 flex items-center justify-center rounded-full bg-warning-bg text-warning text-3xl">
+        <Box className="mx-auto mb-4 w-16 h-16 flex items-center justify-center rounded-full bg-warning-bg text-warning text-3xl">
           🚫
-        </div>
+        </Box>
 
         {/* Title */}
         <h1 className="text-2xl font-semibold text-text-header mb-2">
@@ -18,7 +20,7 @@ const Forbidden = () => {
         </p>
 
         {/* Actions */}
-        <div className="flex flex-col gap-3">
+        <Box className="flex flex-col gap-3">
           <button
             onClick={() => window.history.back()}
             className="w-full py-2 rounded-lg bg-bg-elevated hover:bg-bg-subtle transition"
@@ -32,9 +34,9 @@ const Forbidden = () => {
           >
             Go to Home
           </button>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 

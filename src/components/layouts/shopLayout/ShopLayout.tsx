@@ -12,7 +12,7 @@ const ShopLayout = () => {
       <div className="flex-1 flex flex-col overflow-hidden">
         <ShopHeader />
 
-        <main className="flex-1 p-6 overflow-auto bg-bg-secondary">
+        <main className="flex-1 p-3 overflow-auto bg-bg-secondary">
           <Outlet />
         </main>
       </div>

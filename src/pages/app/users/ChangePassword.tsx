@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axiosInstance from "../../../config/axiosConfig";
-import CustomButton from "../../../components/CustomButton";
-import CustomInput from "../../../components/CustomInput";
+import CustomButton from "../../../components/custom/CustomButton";
+import CustomInput from "../../../components/custom/CustomInput";
 import Loader from "../../../components/Loader";
 import { FiEye, FiEyeOff, FiLock } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
+import { Box, Typography } from "@mui/material";
 
 interface ChangePasswordForm {
   currentPassword: string;
@@ -81,26 +82,29 @@ const ChangePassword = () => {
 
   if (changePasswordMutation.isPending) {
     return (
-      <div className="flex items-center justify-center min-h-100">
+      <Box className="flex items-center justify-center min-h-100">
         <Loader />
-      </div>
+      </Box>
     );
   }
 
   return (
-    <div className="w-full mx-auto md:py-2 space-y-8">
+    <Box className="w-full mx-auto md:py-2 space-y-8">
       {/* Form Card */}
-      <div className="rounded-md bg-bg-paper p-4 shadow-md">
+      <Box className="rounded-md bg-bg-paper p-4 shadow-md">
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <h2 className="text-xl font-semibold text-text-header">
+          <Box className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <Box>
+              <Typography
+                variant="h2"
+                className="font-semibold text-text-header"
+              >
                 Change Password
-              </h2>
-            </div>
-          </div>
+              </Typography>
+            </Box>
+          </Box>
 
-          <div>
+          <Box>
             <CustomInput
               label="Current Password"
               type={showPassword.current ? "text" : "password"}
@@ -128,10 +132,10 @@ const ChangePassword = () => {
               errorText={getErrorText("currentPassword")}
               required
             />
-          </div>
+          </Box>
 
           {/* New Password */}
-          <div>
+          <Box>
             <CustomInput
               label="New Password"
               type={showPassword.new ? "text" : "password"}
@@ -159,10 +163,10 @@ const ChangePassword = () => {
               errorText={getErrorText("newPassword")}
               required
             />
-          </div>
+          </Box>
 
           {/* Confirm Password */}
-          <div>
+          <Box>
             <CustomInput
               label="Confirm New Password"
               type={showPassword.confirm ? "text" : "password"}
@@ -190,10 +194,10 @@ const ChangePassword = () => {
               errorText={getErrorText("confirmPassword")}
               required
             />
-          </div>
+          </Box>
 
           {/* Actions */}
-          <div className="flex flex-col sm:flex-row sm:justify-end gap-4 pt-4">
+          <Box className="flex flex-col sm:flex-row sm:justify-end gap-4 pt-4">
             <CustomButton
               type="button"
               variant="outline"
@@ -210,10 +214,10 @@ const ChangePassword = () => {
             >
               Update Password
             </CustomButton>
-          </div>
+          </Box>
         </form>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 };
 

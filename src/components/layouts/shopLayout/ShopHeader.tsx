@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router-dom";
 import { IoIosLogOut } from "react-icons/io";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
-import CustomButton from "../CustomButton";
-import { useTheme } from "../../hooks/useTheme";
+import CustomButton from "../../custom/CustomButton";
+import { useTheme } from "../../../hooks/useTheme";
 
 const ShopHeader = () => {
   const navigate = useNavigate();
@@ -10,27 +10,31 @@ const ShopHeader = () => {
 
   return (
     <header
-      className="h-16 flex items-center justify-between px-6 text-white bg-primary-500"
+      className="h-14 flex items-center justify-end px-6 text-white bg-primary-500"
       style={{ borderBottomRightRadius: "25px" }}
     >
-      <h1 className="font-semibold">Dashboard</h1>
+      {/* <h1 className="font-semibold">Dashboard</h1> */}
 
-      <div className="flex justify-end items-center gap-4">
-        <span onClick={toggle}>
+      <div className="flex justify-end items-center gap-1">
+        <CustomButton
+          variant="ghost"
+          className="rounded-full! w-10 h-10"
+          size="sm"
+          onClick={toggle}
+        >
           {mode === "dark" ? (
             <MdOutlineLightMode size={24} />
           ) : (
             <MdOutlineDarkMode size={24} />
           )}
-        </span>
+        </CustomButton>
         <CustomButton
-          variant="outline"
-          color="red"
+          variant="ghost"
+          className="rounded-full! w-10 h-10 text-error!"
           size="sm"
-          startIcon={<IoIosLogOut />}
           onClick={() => navigate("/app")}
         >
-          Leave Shop
+          {<IoIosLogOut size={24} />}
         </CustomButton>
       </div>
     </header>

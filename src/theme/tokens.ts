@@ -120,7 +120,7 @@ export const tokens = {
       info: "#60A5FA",
       success: "#4ADE80",
       warning: "#FACC15",
-      error: "#F87171",
+      error: "#DC2629",
     },
 
     state: {

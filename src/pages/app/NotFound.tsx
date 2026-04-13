@@ -1,7 +1,9 @@
+import { Box } from "@mui/material";
+
 const NotFound = () => {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg-base px-4">
-      <div className="bg-bg-paper border border-border-subtle rounded-2xl p-8 max-w-md w-full text-center shadow-sm">
+    <Box className="min-h-screen flex items-center justify-center bg-bg-base px-4">
+      <Box className="bg-bg-paper border border-border-subtle rounded-2xl p-8 max-w-md w-full text-center shadow-sm">
         {/* Big 404 */}
         <h1 className="text-5xl font-bold text-primary-500 mb-2">404</h1>
 
@@ -16,7 +18,7 @@ const NotFound = () => {
         </p>
 
         {/* Actions */}
-        <div className="flex flex-col gap-3">
+        <Box className="flex flex-col gap-3">
           <button
             onClick={() => window.history.back()}
             className="w-full py-2 rounded-lg bg-bg-elevated hover:bg-bg-subtle transition"
@@ -30,9 +32,9 @@ const NotFound = () => {
           >
             Go to Home
           </button>
-        </div>
-      </div>
-    </div>
+        </Box>
+      </Box>
+    </Box>
   );
 };
 
