@@ -1,32 +1,25 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useRef, useState } from "react";
-import {
-  MdOutlineFullscreen,
-  MdOutlineFullscreenExit,
-  MdPrint,
-  MdSave,
-} from "react-icons/md";
+import { MdOutlineFullscreen, MdOutlineFullscreenExit, MdPrint, MdSave } from "react-icons/md";
 import CustomButton from "../../../components/custom/CustomButton";
 import CustomInput from "../../../components/custom/CustomInput";
 import CustomSelect from "../../../components/custom/CustomSelect";
 import { CustomSearch } from "../../../components/custom/CustomSearch";
 import type { CustomerType } from "../../../types/customer";
-import type { BillType, BillProduct, PaymentMethod } from "../../../types/bill";
+import type { BillType, BillProduct, PaymentInfo } from "../../../types/bill";
 import { formatAmount } from "../../../utils/formatAmount";
 import { setSidebarCollapsed } from "../../../slices/sidebarSlice";
 import { useDispatch } from "react-redux";
 import BillingList from "./BillingList";
 import { Box } from "@mui/material";
 import ProductCard from "../../../components/ProductCard";
+import { PaymentModeMap, type PaymentMethod } from "../../../types/enums";
 
 interface BillingState {
-  billProducts: Array<Partial<BillProduct>>;
+  billProducts: Array<BillProduct>;
   selectedCustomer: Partial<CustomerType> | null;
-  paymentInfo: {
-    method: PaymentMethod;
-    paidAmount: number;
-    pendingAmount: number;
-  };
+  paymentInfo: PaymentInfo;
   discountCode: string;
   roundOff: number;
   subtotal: number;
@@ -38,7 +31,7 @@ interface BillingState {
 const initialState: BillingState = {
   billProducts: [],
   selectedCustomer: null,
-  paymentInfo: { method: "CASH", paidAmount: 0, pendingAmount: 0 },
+  paymentInfo: { method: "cash", paidAmount: 0, pendingAmount: 0 },
   discountCode: "",
   roundOff: 0,
   subtotal: 0,
@@ -51,7 +44,7 @@ const BillingPage = () => {
   const ref = useRef<HTMLElement | null>(null);
   const dispatch = useDispatch();
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [state, setState] = useState(initialState);
+  const [billInfo, setBillInfo] = useState(initialState);
   const [customers] = useState<Partial<CustomerType>[]>([
     { id: "1", name: "John Doe", phone: "9999999999", loyaltyPoints: 150 },
     { id: "2", name: "Jane Smith", phone: "8888888888", loyaltyPoints: 250 },
@@ -233,18 +226,12 @@ const BillingPage = () => {
     },
   ]); // Mock - replace with API
 
-  // Derived totals (computed, not stored in state)
-  const subtotal = state.billProducts.reduce(
-    (sum, item) => sum + (item.total || 0),
-    0,
-  );
-  const taxAmount = state.billProducts.reduce(
-    (sum, item) => sum + (item.taxAmount || 0),
-    0,
-  );
+  // Derived totals (computed, not stored in billInfo)
+  const subtotal = billInfo.billProducts.reduce((sum, item) => sum + (item.total || 0), 0);
+  const taxAmount = billInfo.billProducts.reduce((sum, item) => sum + (item.taxAmount || 0), 0);
   const discountAmount = 0; // Implement coupon logic
-  const grandTotal = subtotal + taxAmount + state.roundOff - discountAmount;
-  const pendingAmount = Math.max(0, grandTotal - state.paymentInfo.paidAmount);
+  const grandTotal = subtotal + taxAmount + billInfo.roundOff - discountAmount;
+  const pendingAmount = Math.max(0, grandTotal - billInfo.paymentInfo.paidAmount);
   console.log(pendingAmount);
 
   const toggleFullscreen = async () => {
@@ -262,22 +249,22 @@ const BillingPage = () => {
   }, [dispatch]);
 
   const updateQuantity = (index: number, qty: number) => {
-    const product = state.billProducts[index];
+    const product = billInfo.billProducts[index];
     if (!product.sellingPrice) return;
 
     const total = product.sellingPrice * qty;
     const taxAmount = total * ((product.taxRate || 0) / 100);
 
-    setState((prev) => ({
+    setBillInfo((prev) => ({
       ...prev,
       billProducts: prev.billProducts.map((item, i) =>
         i === index ? { ...item, quantity: qty, total, taxAmount } : item,
-      ) as Array<Partial<BillProduct>>,
+      ) as Array<BillProduct>,
     }));
   };
 
   const removeProduct = (index: number) => {
-    setState((prev) => ({
+    setBillInfo((prev) => ({
       ...prev,
       billProducts: prev.billProducts.filter((_, i) => i !== index),
     }));
@@ -285,20 +272,17 @@ const BillingPage = () => {
 
   const saveBill = () => {
     const bill: Partial<BillType> = {
-      customerId: state.selectedCustomer?.id || "",
-      customerName: state.selectedCustomer?.name || "Walk-in",
-      customerPhone: state.selectedCustomer?.phone || "",
-      billProducts: state.billProducts,
-      totalQuantity: state.billProducts.reduce(
-        (sum, p) => sum + (p.quantity || 0),
-        0,
-      ),
-      subTotal: state.subtotal,
-      discountAmount: state.discountAmount,
-      taxAmount: state.taxAmount,
-      grandTotal: state.grandTotal,
-      roundOff: state.roundOff,
-      payment: state.paymentInfo,
+      customerId: billInfo.selectedCustomer?.id || "",
+      customerName: billInfo.selectedCustomer?.name || "Walk-in",
+      customerPhone: billInfo.selectedCustomer?.phone || "",
+      billProducts: billInfo.billProducts,
+      totalQuantity: billInfo.billProducts.reduce((sum, p) => sum + (p.quantity || 0), 0),
+      subTotal: billInfo.subtotal,
+      discountAmount: billInfo.discountAmount,
+      taxAmount: billInfo.taxAmount,
+      grandTotal: billInfo.grandTotal,
+      roundOff: billInfo.roundOff,
+      payment: billInfo.paymentInfo,
       // status handled separately
       notes: "",
     };
@@ -318,19 +302,16 @@ const BillingPage = () => {
     >
       <Box className="flex justify-end">
         <button onClick={toggleFullscreen}>
-          {isFullscreen ? (
-            <MdOutlineFullscreenExit size={24} />
-          ) : (
-            <MdOutlineFullscreen size={24} />
-          )}
+          {isFullscreen ? <MdOutlineFullscreenExit size={24} /> : <MdOutlineFullscreen size={24} />}
         </button>
       </Box>
 
       <Box className=" h-full overflow-hidden">
         <Box className="grid grid-cols-[1fr_2fr_1fr] h-full gap-3">
           {/* LEFT: Customer + Products */}
-          <Box className="flex flex-col h-full gap-2 min-h-0">
+          <Box className="flex flex-col h-full gap-2 min-h-0 py-2">
             <Box>
+              {/* <CustomInput label="Invoice No" size="small" className="mb-1!" disabled /> */}
               <label className="block text-sm font-medium mb-2">Customer</label>
               <CustomSearch
                 placeholder="Search customer..."
@@ -339,21 +320,19 @@ const BillingPage = () => {
                   return customer.name || "";
                 }}
                 onSelect={(customer: any) =>
-                  setState((prev) => ({
+                  setBillInfo((prev) => ({
                     ...prev,
                     selectedCustomer: customer,
                   }))
                 }
               />
-              {state.selectedCustomer && (
+              {billInfo.selectedCustomer && (
                 <Box className="mt-2  bg-gray-50 rounded-lg text-sm">
                   <Box>
-                    <strong>{state.selectedCustomer.name}</strong>
+                    <strong>{billInfo.selectedCustomer.name}</strong>
                   </Box>
-                  <Box>{state.selectedCustomer.phone}</Box>
-                  <Box className="text-xs text-gray-500">
-                    {state.selectedCustomer.addressLine1}
-                  </Box>
+                  <Box>{billInfo.selectedCustomer.phone}</Box>
+                  <Box className="text-xs text-gray-500">{billInfo.selectedCustomer.address}</Box>
                 </Box>
               )}
             </Box>
@@ -381,15 +360,15 @@ const BillingPage = () => {
             <Box className=" text-sm">
               <Box className="flex justify-between">
                 <span>Subtotal:</span>
-                <span>{formatAmount(state.subtotal)}</span>
+                <span>{formatAmount(billInfo.subtotal)}</span>
               </Box>
               <Box className="flex justify-between">
                 <span>Tax:</span>
-                <span>{formatAmount(state.taxAmount)}</span>
+                <span>{formatAmount(billInfo.taxAmount)}</span>
               </Box>
               <Box className="flex justify-between font-medium text-lg">
                 <span>Total:</span>
-                <span>{formatAmount(state.grandTotal)}</span>
+                <span>{formatAmount(billInfo.grandTotal)}</span>
               </Box>
             </Box>
           </Box>
@@ -404,16 +383,13 @@ const BillingPage = () => {
                   <CustomSelect
                     label="Payment Mode"
                     size="small"
-                    options={[
-                      { value: "CASH", label: "Cash" },
-                      { value: "CARD", label: "Card" },
-                      { value: "UPI", label: "UPI" },
-                      { value: "BANK", label: "Bank Transfer" },
-                      { value: "MIXED", label: "Mixed" },
-                    ]}
-                    value={state.paymentInfo.method}
+                    options={Object.entries(PaymentModeMap).map(([key, value]) => ({
+                      label: value.toUpperCase(),
+                      value: key,
+                    }))}
+                    value={billInfo.paymentInfo.method}
                     onChange={(value: string) =>
-                      setState((prev) => ({
+                      setBillInfo((prev) => ({
                         ...prev,
                         paymentInfo: {
                           ...prev.paymentInfo,
@@ -425,15 +401,13 @@ const BillingPage = () => {
                 </Box>
 
                 <Box>
-                  <label className="block text-sm font-medium mb-1">
-                    Amount Paid
-                  </label>
+                  <label className="block text-sm font-medium mb-1">Amount Paid</label>
                   <CustomInput
                     size="small"
                     type="number"
-                    value={state.paymentInfo.paidAmount}
+                    value={billInfo.paymentInfo.paidAmount}
                     onChange={(e) =>
-                      setState((prev) => ({
+                      setBillInfo((prev) => ({
                         ...prev,
                         paymentInfo: {
                           ...prev.paymentInfo,
@@ -447,7 +421,7 @@ const BillingPage = () => {
                 <Box className="p-3 bg-yellow-50 rounded-lg">
                   <Box className="flex justify-between font-bold">
                     <span>Pending:</span>
-                    <span>{formatAmount(state.paymentInfo.pendingAmount)}</span>
+                    <span>{formatAmount(billInfo.paymentInfo.pendingAmount)}</span>
                   </Box>
                 </Box>
               </Box>
@@ -458,9 +432,9 @@ const BillingPage = () => {
                 <span>Discount Code:</span>
                 <CustomInput
                   size="small"
-                  value={state.discountCode}
+                  value={billInfo.discountCode}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setState((prev) => ({
+                    setBillInfo((prev) => ({
                       ...prev,
                       discountCode: e.target.value,
                     }))
@@ -472,9 +446,9 @@ const BillingPage = () => {
                 label="Round Off"
                 type="number"
                 size="small"
-                value={state.roundOff}
+                value={billInfo.roundOff}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setState((prev) => ({
+                  setBillInfo((prev) => ({
                     ...prev,
                     roundOff: Number(e.target.value),
                   }))

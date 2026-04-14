@@ -1,57 +1,47 @@
-import axios from "axios";
-import axiosInstance from "../config/axiosConfig";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createApi } from "@reduxjs/toolkit/query/react";
 import type { User } from "../types/user";
+import { axiosBaseQuery } from "./axiosBaseQuery";
 
 export interface LoginResponse {
   user: User;
   token: string;
 }
 
-export const login = async (phone: string, password: string): Promise<LoginResponse> => {
-  try {
-    const response = await axiosInstance.post("v1/auth/login", {
-      phone,
-      password,
-    });
+export const authApi = createApi({
+  reducerPath: "auth",
+  baseQuery: axiosBaseQuery(),
 
-    return {
-      user: response.data.data,
-      token: response.data.token,
-    };
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message = error.response?.data?.message || "Login failed. Please try again.";
+  endpoints: (builder) => ({
+    login: builder.mutation<LoginResponse, { phone: string; password: string }>({
+      query: (body) => ({
+        url: "v1/auth/login",
+        method: "POST",
+        body,
+      }),
+      transformResponse: (response: any) => ({
+        user: response.data,
+        token: response.token,
+      }),
+    }),
 
-      throw new Error(message);
-    }
+    // 🚪 LOGOUT
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: "v1/auth/logout",
+        method: "POST",
+      }),
+    }),
 
-    throw new Error("Unexpected error occurred");
-  }
-};
+    // 👤 VERIFY USER
+    verifyUser: builder.query<User, void>({
+      query: () => ({
+        url: "v1/shops",
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response.data,
+    }),
+  }),
+});
 
-export const logout = async (): Promise<void> => {
-  try {
-    await axiosInstance.post("v1/auth/logout");
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message = error.response?.data?.message || "Logout failed";
-
-      throw new Error(message);
-    }
-
-    throw new Error("Unexpected error occurred");
-  }
-};
-
-export const verifyUser = async (): Promise<User> => {
-  try {
-    const response = await axiosInstance.get("v1/auth/verify-user");
-    return response.data.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message = error.response?.data?.message || "Verify failed";
-      throw new Error(message);
-    }
-    throw new Error("Unexpected error occurred");
-  }
-};
+export const { useLoginMutation, useLogoutMutation, useVerifyUserQuery } = authApi;

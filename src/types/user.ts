@@ -1,15 +1,16 @@
-import type { CreatedInfoType, UpdatedInfoType } from "./common";
-
 export interface User {
   id: string;
+  shopIds: string[];
   name: string;
   phone: string;
-  email: string;
-  roles: string[];
-  permissions: Record<string, Record<string, boolean>>;
-  shopIds: string[];
-  aadharNumber: string;
-  address: string;
-  createdAt: CreatedInfoType;
-  updatedAt: UpdatedInfoType;
+  email?: string | null;
+  password: string;
+  isActive: boolean;
+  lastLoginAt?: Date | null;
+  roles?: string[];
+  permissions?: Record<string, Record<string, boolean>>;
+  createdAt: Date;
+  createdBy: string;
+  updatedAt: Date;
+  updatedBy: string;
 }

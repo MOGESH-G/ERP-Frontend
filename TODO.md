@@ -1,41 +1,17 @@
-# Billing Page Implementation Plan
+# RTK Query Migration + Router Fix TODO
 
-## Status: In Progress
+## Phase 1: Router Fix ✅
 
-### [ ] 1. Enhance Pos.tsx with complete 3-column billing layout
+## Phase 2: RTK Query Migration (Current)
 
-- Left: Customer + Product selection
-- Center: Bill items table
-- Right: Payment + Totals
+- [x] RTK Query deps ✅
+- [x] Delete react-query.ts ✅
+- [x] Create RTK API ✅
+- [x] Update store ✅
+- [x] Clean api.ts files ✅
+- [ ] Scan/update components using TanStack Query
+- [ ] Test RTK queries
+- [ ] Uninstall TanStack
+- [ ] Complete
 
-### [ ] 2. Implement state management
-
-- billProducts array
-- selectedCustomer
-- paymentInfo
-- totals calculations
-
-### [ ] 3. Add calculations
-
-- Subtotal, tax, discount, roundoff, grandTotal
-
-### [ ] 4. UI Components
-
-- CustomTable for products/bill
-- CustomSelect for customer/payment
-- CustomInput for amounts
-
-### [ ] 5. Features
-
-- Auto-calculations
-- Customer/product search
-- Save bill
-- Print receipt
-
-### [ ] 6. Testing
-
-- Run dev server
-- Test UI interactions
-- Verify calculations
-
-**Next Step**: Implement step 1 - Full Pos.tsx enhancement
+**Progress**: 6/11 ✅

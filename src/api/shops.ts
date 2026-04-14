@@ -1,19 +1,18 @@
-import axios from "axios";
-import axiosInstance from "../config/axiosConfig";
-import type { Shops } from "../types/shops";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createApi } from "@reduxjs/toolkit/query/react";
+import type { Shop } from "../types/shops";
+import { axiosBaseQuery } from "./axiosBaseQuery";
 
-export const getShops = async (): Promise<Shops[]> => {
-  try {
-    const response = await axiosInstance.get("v1/shops");
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      const message =
-        error.response?.data?.message || "Login failed. Please try again.";
+export const shopsApi = createApi({
+  reducerPath: "shops",
+  baseQuery: axiosBaseQuery(),
 
-      throw new Error(message);
-    }
+  endpoints: (builder) => ({
+    getShops: builder.query<Shop[], void>({
+      query: () => ({ url: "v1/shops", method: "GET" }),
+      transformResponse: (response: any) => response,
+    }),
+  }),
+});
 
-    throw new Error("Unexpected error occurred");
-  }
-};
+export const { useGetShopsQuery } = shopsApi;

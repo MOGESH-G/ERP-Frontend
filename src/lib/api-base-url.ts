@@ -13,10 +13,6 @@ export function getApiBaseUrl() {
   const port = import.meta.env.VITE_API_PORT;
   const domain = import.meta.env.VITE_API_BASE_DOMAIN;
 
-  console.log("Current tenant:", tenant);
-  console.log("API Base Domain:", domain);
-  console.log("API Port:", port);
-
   if (!tenant) {
     return `${protocol}//${domain}:${port}/api`;
   }

@@ -1,51 +1,40 @@
-// hooks/useAuth.ts
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useDispatch } from "react-redux";
-import { login, logout, type LoginResponse } from "../api/auth";
+import { useLoginMutation, useLogoutMutation } from "../api/auth";
 import { loginSuccess, logoutSuccess } from "../slices/authSlice";
 
-const authKeys = {
-  user: () => ["auth", "user"] as const,
-  session: () => ["auth", "session"] as const,
-};
-
-interface LoginVariables {
-  phone: string;
-  password: string;
-}
-
 export const useLogin = () => {
-  const queryClient = useQueryClient();
+  const [loginApi] = useLoginMutation();
   const dispatch = useDispatch();
 
-  return useMutation<LoginResponse, Error, LoginVariables>({
-    mutationKey: authKeys.user(),
-    mutationFn: ({ phone, password }) => login(phone, password),
-    onSuccess: (data) => {
+  return {
+    mutateAsync: async (phone: string, password: string) => {
+      const data = await loginApi({ phone, password }).unwrap();
       localStorage.setItem("token", data.token);
       dispatch(loginSuccess({ user: data.user, token: data.token }));
-      queryClient.setQueryData(authKeys.user(), data.user);
+      return data;
     },
-    onError: () => {
-      localStorage.removeItem("token");
-    },
-  });
+    isLoading: loginApi.isLoading,
+  };
 };
 
 export const useLogout = () => {
-  const queryClient = useQueryClient();
+  const [logoutApi] = useLogoutMutation();
   const dispatch = useDispatch();
 
   const cleanup = () => {
     localStorage.removeItem("token");
     dispatch(logoutSuccess());
-    queryClient.removeQueries();
   };
 
-  return useMutation<void, Error>({
-    mutationKey: authKeys.session(),
-    mutationFn: logout,
-    onSuccess: cleanup,
-    onError: cleanup,
-  });
+  return {
+    mutateAsync: async () => {
+      await logoutApi().unwrap();
+      cleanup();
+    },
+    mutate: () => {
+      logoutApi();
+      cleanup();
+    },
+    isLoading: logoutApi.isLoading,
+  };
 };

@@ -1,12 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import axiosInstance from "../../../config/axiosConfig";
 import CustomButton from "../../../components/custom/CustomButton";
 import CustomInput from "../../../components/custom/CustomInput";
 import Loader from "../../../components/Loader";
 import { FiEye, FiEyeOff, FiLock } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
+import { useChangePasswordMutation } from "../../../api/users";
 
 interface ChangePasswordForm {
   currentPassword: string;
@@ -28,23 +28,7 @@ const ChangePassword = () => {
     confirm: false,
   });
 
-  const changePasswordMutation = useMutation({
-    mutationFn: async (data: ChangePasswordForm) => {
-      const response = await axiosInstance.post(
-        "/v1/auth/change-password",
-        data,
-      );
-      return response.data;
-    },
-    onSuccess: () => {
-      alert("Password changed successfully! Please log in again.");
-      window.location.href = "/login";
-    },
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    onError: (err: any) => {
-      alert(err.response?.data?.message || "Failed to change password");
-    },
-  });
+  const [changePassword, { isLoading }] = useChangePasswordMutation();
 
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
@@ -65,10 +49,16 @@ const ChangePassword = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validateForm()) {
-      changePasswordMutation.mutate(formData);
+      try {
+        await changePassword(formData).unwrap();
+        alert("Password changed successfully! Please log in again.");
+        window.location.href = "/login";
+      } catch (err: any) {
+        alert(err?.data?.message || "Failed to change password");
+      }
     }
   };
 
@@ -80,7 +70,7 @@ const ChangePassword = () => {
 
   const getErrorText = (field: string) => errors[field] || "";
 
-  if (changePasswordMutation.isPending) {
+  if (isLoading) {
     return (
       <Box className="flex items-center justify-center min-h-100">
         <Loader />
@@ -95,10 +85,7 @@ const ChangePassword = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           <Box className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <Box>
-              <Typography
-                variant="h2"
-                className="font-semibold text-text-header"
-              >
+              <Typography variant="h2" className="font-semibold text-text-header">
                 Change Password
               </Typography>
             </Box>
@@ -109,9 +96,7 @@ const ChangePassword = () => {
               label="Current Password"
               type={showPassword.current ? "text" : "password"}
               value={formData.currentPassword}
-              onChange={(e) =>
-                setFormData({ ...formData, currentPassword: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, currentPassword: e.target.value })}
               className="w-1/2!"
               placeholder="Enter your current password"
               startIcon={<FiLock className="w-5 h-5 opacity-75" />}
@@ -141,9 +126,7 @@ const ChangePassword = () => {
               type={showPassword.new ? "text" : "password"}
               value={formData.newPassword}
               className="w-1/2!"
-              onChange={(e) =>
-                setFormData({ ...formData, newPassword: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, newPassword: e.target.value })}
               placeholder="Enter new password (min 8 chars)"
               startIcon={<FiLock className="w-5 h-5 opacity-75" />}
               endIcon={
@@ -172,9 +155,7 @@ const ChangePassword = () => {
               type={showPassword.confirm ? "text" : "password"}
               value={formData.confirmPassword}
               className="w-1/2!"
-              onChange={(e) =>
-                setFormData({ ...formData, confirmPassword: e.target.value })
-              }
+              onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               placeholder="Confirm your new password"
               startIcon={<FiLock className="w-5 h-5 opacity-75" />}
               endIcon={
@@ -209,7 +190,7 @@ const ChangePassword = () => {
             <CustomButton
               type="submit"
               variant="primary"
-              loading={changePasswordMutation.isPending}
+              loading={isLoading}
               className="flex-1 sm:flex-none"
             >
               Update Password
